@@ -1,24 +1,24 @@
-object TpDbz {
+package object TpDbz {
   
   case class Guerrero(
       nombre: String,
       tipo:Tipo,
       maximoKi: Int,
-      items:List[Item]) {
-  var ki = maximoKi
+      items:List[Item] = List()) {
+  
+    var ki = maximoKi
    
-  def aumentarKi (numero: Int) {
-        copy(maximoKi = Math.min( ki + numero,maximoKi))
-      }
+  def aumentarKi (numero: Int) = copy(maximoKi = Math.min(ki + numero, maximoKi))
+      
     
   }
   
-  abstract class Tipo(val adicionales: List[Adicional]= List()) // adiocional --> cola, poder curativo ??
+  abstract class Tipo
   
   case object Humano extends Tipo
   case object Saiyajin extends Tipo {
     var cola = true
-    
+    var nivel = 1
   }
   case object Androide extends Tipo
   case object Namekusein extends Tipo
@@ -27,22 +27,26 @@ object TpDbz {
   abstract class Item(){ //implementar, solo para que no tire error
     
   }
-  
- type Movimiento = Function1[Guerrero, Guerrero]
  
- val dejarseFajar = (guerrero: Guerrero) => { // si se queda quieto devuelvo al mismo guerrero
-   guerrero
+  
+ trait Movimiento extends Function2[Guerrero,Guerrero,Guerrero] {
+   override def apply(guerrero: Guerrero, oponente: Guerrero): Guerrero
  }
  
- val cargarKi = (guerrero : Guerrero) =>{
-   val guerreroConMasKi = guerrero.copy()
-   guerreroConMasKi.tipo match{
-     case Androide => guerreroConMasKi
-     case Saiyajin => //segun el estado aumentarlo
-     case _ => guerrero.aumentarKi 
-   }
+  case object DejarseFajar extends Movimiento {
+   override def apply(guerrero: Guerrero, oponente: Guerrero) = guerrero
    
  }
  
+  case object CargarKi extends Movimiento {
+    override def apply(guerrero: Guerrero, oponente: Guerrero) = {
+      guerrero.tipo match {
+        case Saiyajin => guerrero.aumentarKi(150)
+        case Androide => guerrero.aumentarKi(0)
+        case _ => guerrero.aumentarKi(100)
+      }
+      
+    }
+  }
   
 }
