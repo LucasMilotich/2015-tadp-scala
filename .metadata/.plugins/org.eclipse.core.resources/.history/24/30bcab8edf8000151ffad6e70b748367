@@ -1,0 +1,20 @@
+
+
+object TpDbz {
+  
+  case class Guerrero(val nombre: String, val items:List[Items], val bienEstar: Int,val tipo:Tipo){
+  
+    
+  }
+  
+  abstract class Tipo(val adicionales: List[Adicional]: Option= List())
+  
+  case class Humano extends Tipo
+  case class Saiyajin extends Tipo
+  case class Androide extends Tipo
+  case class Namekusein extends Tipo
+  case class Monstruo extends Tipo
+  
+  
+  
+}

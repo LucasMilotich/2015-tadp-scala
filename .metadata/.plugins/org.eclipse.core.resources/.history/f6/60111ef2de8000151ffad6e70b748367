@@ -1,0 +1,11 @@
+
+
+object TpDbz {
+  
+  case class Guerrero(val nombre: String, val items:List[Items], val bienEstas: Int){
+    //los androides no tienen ki, pero si bateria, porque no encontrar un nombre que les vaya a ambos y listo?
+    
+  }
+  
+  
+}

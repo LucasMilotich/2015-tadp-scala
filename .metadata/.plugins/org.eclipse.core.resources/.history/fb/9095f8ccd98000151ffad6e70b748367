@@ -1,0 +1,10 @@
+
+
+object TpDbz {
+  
+  abstract class TipoGuerrero(){
+    
+    
+  }
+  
+}

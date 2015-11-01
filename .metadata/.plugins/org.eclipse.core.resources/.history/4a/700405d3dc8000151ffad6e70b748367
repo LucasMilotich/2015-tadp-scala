@@ -1,0 +1,33 @@
+
+
+object TpDbz {
+  
+  abstract class TipoGuerrero(val ki: Int){ //para que no tire error, vemos que le ponemos
+    
+    
+  }
+  val ki= 0 //tiremos codigo, total
+  
+  case object Humano extends TipoGuerrero(ki)
+  case object Saiyajin extends TipoGuerrero(ki)
+  case object Androide extends TipoGuerrero(ki)
+  case object Namekuseins extends TipoGuerrero(ki)
+  case object Monstruo extends TipoGuerrero(ki)
+  
+  case class Guerrero(tipo:TipoGuerrero) //para que no tire error, veremos que variables tiene
+  
+  
+  type Movimiento = Function1[Guerrero, Guerrero]
+  
+  case class cargarKi() extends Movimiento{
+    def apply(guerrero: Guerrero) = {
+      guerrero.tipo match{
+        case Androide => guerrero
+      }
+      
+    }
+  }
+  
+  
+  
+}

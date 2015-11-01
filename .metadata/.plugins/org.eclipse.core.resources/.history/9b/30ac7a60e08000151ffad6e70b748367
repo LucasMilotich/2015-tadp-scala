@@ -1,0 +1,30 @@
+
+
+object TpDbz {
+  
+  case class Guerrero(val nombre: String, val items:List[Item], val bienEstar: Int,val tipo:Tipo){
+  
+    
+  }
+  
+  abstract class Tipo(val adicionales: List[Adicional]= List()) // adiocional --> cola, poder curativo ??
+  
+  case object Humano extends Tipo
+  case object Saiyajin extends Tipo
+  case object Androide extends Tipo
+  case object Namekusein extends Tipo
+  case object Monstruo extends Tipo
+  
+  case class Adicional () //implementar
+  
+  abstract class Item(){
+    
+  }
+  
+  abstract class Arma(danio:Int) extends Item
+  
+  class ArmaRoma(danio:Int) extends Arma{
+    
+  }
+  
+}

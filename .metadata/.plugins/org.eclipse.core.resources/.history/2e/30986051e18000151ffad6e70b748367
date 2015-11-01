@@ -1,0 +1,43 @@
+
+
+object TpDbz {
+  
+  case class Guerrero(val nombre: String, val items:List[Item], val bienEstar: Int,val tipo:Tipo){
+  
+    
+  }
+  
+  abstract class Tipo(val adicionales: List[Adicional]= List()) // adiocional --> cola, poder curativo ??
+  
+  case object Humano extends Tipo
+  case object Saiyajin extends Tipo
+  case object Androide extends Tipo
+  case object Namekusein extends Tipo
+  case object Monstruo extends Tipo
+  
+  case class Adicional () //implementar, solo para que no tire error
+  
+  abstract class Item(){ //implementar, solo para que no tire error
+    
+  }
+  
+ type Movimiento = Function1[Guerrero, Guerrero]
+ 
+ val dejarseFajar = (guerrero: Guerrero) => {
+   guerrero
+ }
+ 
+ al descansar = (pokemon: Pokemon) => {
+    val pokemonDescansado = pokemon.copy(
+      energia = pokemon.energiaMaxima)
+      
+    if (pokemonDescansado.estado == Bueno && 
+        pokemon.energia < pokemon.energiaMaxima * 0.5){
+        pokemonDescansado.cambiarEstado(Dormido())
+    }
+    else {
+      pokemonDescansado
+    }
+  }
+  
+}

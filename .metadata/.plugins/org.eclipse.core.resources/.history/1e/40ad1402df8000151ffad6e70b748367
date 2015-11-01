@@ -1,0 +1,11 @@
+
+
+object TpDbz {
+  
+  case class Guerrero(val nombre: String, val items:List[Items], val bienEstar: Int){
+  
+    
+  }
+  
+  
+}

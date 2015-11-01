@@ -1,0 +1,19 @@
+
+
+object TpDbz {
+  
+  abstract class TipoGuerrero(){
+    
+    
+  }
+  
+  case object Humano extends TipoGuerrero
+  case object Saiyajin extends TipoGuerrero
+  case object Androide extends TipoGuerrero
+  case object Namekuseins extends TipoGuerrero
+  case object Monstruo extends TipoGuerrero
+  
+  
+  type Movimiento 
+  
+}
