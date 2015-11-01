@@ -1,6 +1,0 @@
-package Dbz
-
-class Item {
-  
-}
-

@@ -1,11 +1,14 @@
-
-
 object TpDbz {
   
-  case class Guerrero(val nombre: String, val items:List[Item], val bienEstar: Int,val tipo:Tipo){
+  case class Guerrero(
+      nombre: String,
+      tipo:Tipo,
+      maximoKi: Int,
+      items:List[Item]) {
+  var ki = maximoKi
    
-  def aumentarKi{
-        copy(bienEstar =Math.min( bienEstar + 100,500))
+  def aumentarKi (numero: Int) {
+        copy(maximoKi = Math.min( ki + numero,maximoKi))
       }
     
   }
@@ -13,12 +16,13 @@ object TpDbz {
   abstract class Tipo(val adicionales: List[Adicional]= List()) // adiocional --> cola, poder curativo ??
   
   case object Humano extends Tipo
-  case object Saiyajin extends Tipo
+  case object Saiyajin extends Tipo {
+    var cola = true
+    
+  }
   case object Androide extends Tipo
   case object Namekusein extends Tipo
   case object Monstruo extends Tipo
-  
-  case class Adicional () //implementar, solo para que no tire error
   
   abstract class Item(){ //implementar, solo para que no tire error
     
