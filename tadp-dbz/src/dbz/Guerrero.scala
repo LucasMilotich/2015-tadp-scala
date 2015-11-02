@@ -13,6 +13,10 @@ case class Guerrero(
   def cargarKi = 
     tipo.subirKi(this)
   
-    
+  def tieneItem(un_item: Item) = 
+   items.contains(un_item)
+  
+  def multiplicarMaximoKi(n :Int) =
+    copy(maximoKi = maximoKi * n)
 }
   
