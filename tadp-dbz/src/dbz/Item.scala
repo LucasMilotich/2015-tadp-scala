@@ -4,7 +4,7 @@ abstract class Item {
   def aplicarSobre(g: Guerrero): Guerrero = g
 }
 
-case object semillaDelErmitaño extends Item {
+case object semillaDelErmitaÃ±o extends Item {
   override def aplicarSobre(g: Guerrero) = {
     g.copy(ki = g.maximoKi)
   }

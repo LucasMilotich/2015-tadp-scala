@@ -26,3 +26,11 @@ case class FusionarCon(compa: Guerrero) extends Movimiento {
   
 }
 
+case class Explotar(atacado:Guerrero) extends Movimiento {
+  override def apply(guerrero:Guerrero) ={
+    guerrero.explota
+    atacado.recibiExplosionDe(guerrero)
+  }
+  
+}
+

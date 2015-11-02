@@ -36,5 +36,16 @@ case class Guerrero(
     copy(items = nuevosItems)
   }
   
+  def recibiExplosionDe(atacante:Guerrero)={
+    atacante.tipo match{
+      case Androide => bajarKi(3 * atacante.ki) 
+      case _ => bajarKi(2 * atacante.ki)
+    }
+  }
+  
+  def explota ={
+    bajarKi(ki)
+      }
+  
 }
   
