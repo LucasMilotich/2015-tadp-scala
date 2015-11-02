@@ -17,3 +17,7 @@ case object Androide extends Tipo {
 case object Namekusein extends Tipo
 case object Monstruo extends Tipo
 case object Humano extends Tipo
+
+case class Fusionado(original: Guerrero) extends Tipo {
+  
+}
