@@ -5,11 +5,14 @@ case class Guerrero(
       tipo:Tipo,
       ki: Int,
       maximoKi: Int,
-      items:List[Item] = List(),
+      items:Set[Item] = Set(),
       movimientos: List[Movimiento] = List()) {
      
   def aumentarKi (numero: Int) =
     copy(ki = Math.min(ki + numero, maximoKi))
+    
+  def bajarKi (numero: Int) =
+    copy(ki = Math.max(ki-numero,0))
     
   def cargarKi = 
     tipo.subirKi(this)
@@ -25,6 +28,12 @@ case class Guerrero(
         maximoKi = maximoKi + compa.maximoKi,
         ki = ki + compa.ki,
         movimientos = movimientos ++ compa.movimientos)
+  }
+  
+  def usarItem(unItem: Item) = {
+    unItem.aplicarSobre(this)
+    val nuevosItems = items.-(unItem)
+    copy(items = nuevosItems)
   }
   
 }

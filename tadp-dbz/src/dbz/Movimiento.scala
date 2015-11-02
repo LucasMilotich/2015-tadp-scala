@@ -25,3 +25,4 @@ case class FusionarCon(compa: Guerrero) extends Movimiento {
   }
   
 }
+
