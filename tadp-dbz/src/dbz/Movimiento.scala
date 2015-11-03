@@ -19,9 +19,9 @@ case object CargarKi extends Movimiento {
 
 case class FusionarCon(compa: Guerrero) extends Movimiento {
   override def apply(guerrero: Guerrero) = {
-    val lista = List(Namekusein,Saiyajin,Humano)
-    require(lista.contains(guerrero.tipo) && lista.contains(compa.tipo),"No se puede fusionar ese guerrero por su especie")
-    guerrero.fusionar(compa)
+    if (guerrero.tipo.puedeFusionarse && compa.tipo.puedeFusionarse)
+        guerrero.fusionar(compa)
+    else throw new RuntimeException("No se puede fusionar una de esas especies")
   }
   
 }
