@@ -7,9 +7,9 @@ import dbz._
 class MovimientosTest {
   
   val krilin = new Guerrero("krilin",Humano,350,1500)
-  val goku = new Guerrero("goku",Saiyajin,1500,3000)
+  val goku = new Guerrero("goku",Saiyajin(),1500,3000)
   val a18 = new Guerrero("a18",Androide,0,0)
-  
+  val goku_ssj2 = new Guerrero("goku",Saiyajin(SuperSaiyajin(2)),1500,2000)
   
   @Test
   def `Guerrero_descansa_y_no_pasa_nada` = {
@@ -30,6 +30,12 @@ class MovimientosTest {
   def `Saiyajin_carga_ki` = {
     assertEquals(CargarKi(goku).ki,1600)
   }
+  
+  @Test
+  def `SuperSaiyajin2_carga_300_ki` = {
+    assertEquals(CargarKi(goku_ssj2).ki,1800)
+  }
+  
   
   @Test
   def `Fusion_Humano_Saiyajin_funciona` = {

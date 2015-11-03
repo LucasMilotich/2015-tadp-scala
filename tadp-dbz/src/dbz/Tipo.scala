@@ -3,7 +3,8 @@ package dbz
 abstract class Tipo {
     
   def subirKi(g: Guerrero) = g.aumentarKi(100)
-    
+  
+  def tieneCola = false
 }
   
 

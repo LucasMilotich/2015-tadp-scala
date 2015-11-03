@@ -26,6 +26,20 @@ case class FusionarCon(compa: Guerrero) extends Movimiento {
   
 }
 
+//que valga para mono y para ssj al mismo tiempo
+case class Convertirse(formaNueva: FormaSaiyajin) extends Movimiento {
+  def apply(guerrero: Guerrero) = {
+    formaNueva match {
+      case SuperSaiyajin(_) if (guerrero.ki >= guerrero.maximoKi * 0.5) => 
+        Saiyajin().subirNivelSS(guerrero)  
+      case MonoSaiyajin if (guerrero.tieneCola) =>
+        guerrero.multiplicarMaximoKi(3).copy(tipo = Saiyajin(MonoSaiyajin))
+      case _ =>
+        guerrero
+    }
+  }
+}
+
 case class Explotar(atacado:Guerrero) extends Movimiento {
   override def apply(guerrero:Guerrero) ={
     guerrero.explota
@@ -33,4 +47,3 @@ case class Explotar(atacado:Guerrero) extends Movimiento {
   }
   
 }
-

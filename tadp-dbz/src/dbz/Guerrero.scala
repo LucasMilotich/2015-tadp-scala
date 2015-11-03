@@ -46,6 +46,9 @@ case class Guerrero(
   def explota ={
     bajarKi(ki)
       }
-  
+ 
+  def tieneCola = {
+    tipo.tieneCola
+  }
 }
   
