@@ -22,7 +22,7 @@ class MovimientosTest {
 
   @Test
   def `Humano_carga_ki` = {
-    assertEquals(CargarKi(krilin).ki, 450)
+    assertEquals((CargarKi(krilin).ki,None),(450,None))
   }
 
   @Test

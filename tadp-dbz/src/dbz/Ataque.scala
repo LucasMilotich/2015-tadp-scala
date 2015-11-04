@@ -5,14 +5,14 @@ abstract class TipoAtaque extends Movimiento {
 }
 
 case class Explotar(atacado: Guerrero) extends TipoAtaque {
-  def apply(guerrero: Guerrero) = {
+  def apply(guerrero: Guerrero, atacado : Option[Guerrero]) = {
     guerrero.tipo match {
       case Androide =>
-        guerrero.explota
-        atacado.recibiExplosionDe(guerrero)
+        (guerrero.explota,
+        atacado.recibiExplosionDe(guerrero))
       case Monstruo =>
-        guerrero.explota
-        atacado.recibiExplosionDe(guerrero)
+        (guerrero.explota,
+        atacado.recibiExplosionDe(guerrero))
       case _ => throw new RuntimeException("No podes explotar")
 
     }
