@@ -80,9 +80,12 @@ case class Guerrero(
   def recibirOnda(cantidad:Int) ={
       tipo match {
       case Monstruo => bajarKi(cantidad /2)
+      case Androide => aumentarKi(cantidad)
       case _ => bajarKi(cantidad*2)
       
     }
   }
+  
+  
 }
   
