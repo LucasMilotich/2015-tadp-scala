@@ -6,7 +6,8 @@ case class Guerrero(
       ki: Int,
       maximoKi: Int,
       items:Set[Item] = Set(),
-      movimientos: List[Movimiento] = List(),
+      movimientosAprendidos: List[Movimiento] = List(),
+      movimientosUtilizados: List[Movimiento] = List(),
       estado:Estado = NormalGuerrero) {
           
   def aumentarKi (numero: Int) =
