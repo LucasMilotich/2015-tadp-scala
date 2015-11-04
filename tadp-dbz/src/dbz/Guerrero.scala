@@ -76,15 +76,12 @@ case class Guerrero(
     cantidad < ki
   }
   
-  def lanzarOndaA(atacado:Guerrero, cantidad:Int) ={
-    //no distingo entre bateria y ki porque se tomo todo como un mismo valor numerico
-      atacado.tipo match {
+  def recibirOnda(cantidad:Int) ={
+      tipo match {
       case Monstruo => bajarKi(cantidad /2)
       case _ => bajarKi(cantidad*2)
       
     }
-     
-    
   }
 }
   

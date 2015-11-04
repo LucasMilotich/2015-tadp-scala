@@ -36,8 +36,7 @@ case class Onda(cantidad :Int) extends TipoAtaque{
     if (! guerrero.podesLanzarOnda(cantidad)){
       throw new RuntimeException("No tenes ki suficiente para lanzar la onda")
     }
-    (guerrero.bajarKi(cantidad),guerrero.lanzarOndaA(atacado, cantidad))
-    // guerrero.lanzarOndaA(a,c) devuelve al atacado
+    (guerrero.bajarKi(cantidad),atacado.recibirOnda(cantidad))
     
   }
   

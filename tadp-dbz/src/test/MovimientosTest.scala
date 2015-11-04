@@ -2,106 +2,120 @@ package test
 
 import org.junit.Assert._
 import org.junit.Test
+import org.junit.Before
 import dbz._
-import dbz.GolpesNinja
-import dbz.Explotar
+
 
 class MovimientosTest {
 
   val krilin = new Guerrero("krilin", Humano, 350, 1500)
   val goku = new Guerrero("goku", Saiyajin(), 1500, 3000)
-  val piccolo = new Guerrero ("piccolo", Namekusein, 500, 1000)
+  val piccolo = new Guerrero("piccolo", Namekusein, 500, 1000)
   val a18 = new Guerrero("a18", Androide, 0, 0)
-  val freezer= new Guerrero("freezer", Monstruo, 50,800)
+  val freezer = new Guerrero("freezer", Monstruo, 50, 800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
-
+ 
+  
+  def assertKi(guerrero: Guerrero, cant: Int) = assertEquals(guerrero.ki, cant)
+    
+  
   @Test
   def `Guerrero_descansa_y_no_pasa_nada` = {
-    val( descansa,elOtro)= DejarseFajar(krilin,goku)
-    assertEquals((descansa,elOtro), (krilin,goku))
+    val nuevoCombate = DejarseFajar(krilin,goku)
+    assertEquals(nuevoCombate, (krilin,goku))
   }
 
   @Test
   def `Humano_carga_ki` = {
-    val(cargaKi,elOtro) = CargarKi(krilin,freezer)
-    assertEquals((cargaKi,elOtro),(450,50))
+    val (cargaKi,elOtro) = CargarKi(krilin,freezer)
+    
+    assertKi(cargaKi,450)
+    assertKi(elOtro,50)
   }
 
   @Test
-  def `Androide_carga_ki` = {
-    assertEquals(CargarKi(a18).ki, 0)
+  def `Androide_no_carga_ki` = {
+    val (nuevo1,_) = CargarKi(a18,krilin)
+    assertKi(nuevo1,0)
   }
 
   @Test
   def `Saiyajin_carga_ki` = {
-    assertEquals(CargarKi(goku).ki, 1600)
+    val (nuevo1, nuevo2) = CargarKi(goku,piccolo)
+    assertKi(nuevo1,1600)
+    assertKi(nuevo2,500)
   }
 
   @Test
   def `SuperSaiyajin2_carga_300_ki` = {
-    assertEquals(CargarKi(goku_ssj2).ki, 1800)
+    val (nuevo1,_) = CargarKi(goku_ssj2,krilin)
+    assertKi(nuevo1, 1800)
   }
 
   @Test
   def `Fusion_Humano_Saiyajin_funciona` = {
-    val nuevoGuerrero = FusionarCon(krilin)(goku)
-    assertEquals(nuevoGuerrero.ki, 1850)
+    val (nuevoGuerrero,_) = FusionarCon(krilin)(goku,piccolo)
+    
+    assertKi(nuevoGuerrero,1850)
     assertEquals(nuevoGuerrero.maximoKi, 4500)
   }
 
-  @Test //no me acuerdo como se testeaba el error
+  @Test(expected = classOf[RuntimeException])
   def `Fusion_Saiyajin_Androide_lanza_error` = {
-    val excep=FusionarCon(a18,goku)
+    FusionarCon(goku)(a18,krilin)
     fail()
   }
 
-  @Test
-  def `krilin no puede explotar por ser humano` = {
+  @Test(expected = classOf[RuntimeException])
+  def `krilin_no_puede_explotar_por_ser_humano` = {
     val excep = Explotar(goku,krilin)
     fail()
   }
 
-  
   @Test
-  def `explota freezer y lastima a goku` = {
-    val (nuevoGoku, nuevoFreezer) = Explotar(goku,freezer)
-    assertEquals((nuevoGoku.ki, nuevoFreezer.ki),(1400,0))
-      }
-  
-  @Test
-   def `humano golpea a andriode` = {
-  val perdedor= GolpesNinja(a18,krilin)
-  assertEquals(perdedor.ki, 340)
+  def `explota_freezer_y_lastima_a_goku` = {
+    val (nuevoFreezer, nuevoGoku) = Explotar(freezer,goku)
     
+    assertKi(nuevoFreezer,0)
+    assertKi(nuevoGoku,1400)
+  }
+
+  @Test
+  def `humano_golpea_a_androide` = {
+    val (humano,androide) = GolpesNinja(krilin, a18)
+
+    assertKi(humano, 340)
+    assertKi(androide,0)
   }
   
   @Test
-  def ` atacante con menor ki le pega a uno con mas ki` ={
-    val perdedor= GolpesNinja(piccolo)(krilin)
-     assertEquals(perdedor.ki, 330)
+  def `atacante_con_menor_ki_le_pega_a_uno_con_mas_ki` ={
+    val (menor,mayor) = GolpesNinja(krilin,piccolo)
     
+    assertKi(menor,330)
+    assertKi(mayor,500)
   }
   
   @Test
-  def `atacante con mayor ki le pega a uno con menos ki` ={
-    val perdedor= GolpesNinja(krilin)(piccolo)
-     assertEquals(perdedor.ki, 330)
+  def `atacante_con_mayor_ki_le_pega_a_uno_con_menos_ki` ={
+   val (mayor,menor) = GolpesNinja(piccolo,krilin)
     
-  }
-  
-  @Test //pasa lo mismo que en el test de explotar, no puedo testear al otro guerrero
-  def `krilin ataca a freezer` ={
-    val nuevoKrilin= Onda(freezer, 10)(krilin)
-    assertEquals(nuevoKrilin.ki, 340)
-    
+    assertKi(menor,330)
+    assertKi(mayor,500)
   }
   
   @Test
-  def `krilin queire atacar a freezaar con mas de su ki` ={
-    val nuevoKrilin= Onda(freezer, 1000)(krilin)
-   fail()
+  def `krilin_ataca_con_onda_10_a_freezer` ={
+    val (nuevoKrilin,nuevoFreezer) = Onda(10)(krilin,freezer)
     
+    assertKi(nuevoKrilin,340)
+    assertKi(nuevoFreezer,45)    
   }
   
+  @Test(expected = classOf[RuntimeException])
+  def `krilin_ataca_con_onda_1000_a_freezer_y_falla` ={
+    Onda(1000)(krilin,freezer)
+    fail()
+  }
   
 }
