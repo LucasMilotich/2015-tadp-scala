@@ -18,7 +18,12 @@ case class Guerrero(
      nuevoGuerrero.die
     else nuevoGuerrero
   }
-    
+   
+  def bajarKiHasta(numero: Int) = {
+    require(numero >= 0 && numero < ki, "Numero de Ki inválido para bajar")
+    if (numero == 0) die
+    else copy(ki = numero)
+  }
     
   def cargarKi = 
     tipo.subirKi(this)
@@ -36,11 +41,26 @@ case class Guerrero(
         movimientos = movimientos ++ compa.movimientos)
   }
   
-  def usarItem(unItem: Item) = {
-    unItem.aplicarSobre(this)
+  def usarItem(unItem: Item, oponente: Guerrero) = {
+    val (nuevoG, nuevoOp) = unItem.aplicarEn(this,oponente)
+    
+    (nuevoG,nuevoOp)
+  }
+  
+  def sacarItem(unItem: Item) = {
     val nuevosItems = items.-(unItem)
     copy(items = nuevosItems)
   }
+ 
+  def agregarItem(unItem: Item) = {
+    val nuevosItems = items.+(unItem)
+    copy(items = nuevosItems)
+  }
+  
+  def reemplazarItem(itemFuera: Item, itemDentro: Item) = 
+    sacarItem(itemFuera).agregarItem(itemDentro)
+  
+  def cambiarTipo(nuevoTipo: Tipo) = copy(tipo = nuevoTipo)
   
   def recibiExplosionDe(atacante:Guerrero)={
     atacante.tipo match{
