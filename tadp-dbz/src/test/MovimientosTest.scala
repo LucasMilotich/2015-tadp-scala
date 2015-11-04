@@ -36,8 +36,7 @@ class MovimientosTest {
     assertEquals(CargarKi(goku_ssj2).ki,1800)
   }
   
-  
-  @Test
+   @Test
   def `Fusion_Humano_Saiyajin_funciona` = {
     val nuevoGuerrero = FusionarCon(krilin)(goku)
     assertEquals(nuevoGuerrero.ki,1850)
@@ -50,4 +49,6 @@ class MovimientosTest {
       FusionarCon(a18)(goku)
       fail()
   }
+  
+  
 }

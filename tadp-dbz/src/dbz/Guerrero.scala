@@ -6,13 +6,19 @@ case class Guerrero(
       ki: Int,
       maximoKi: Int,
       items:Set[Item] = Set(),
-      movimientos: List[Movimiento] = List()) {
-     
+      movimientos: List[Movimiento] = List(),
+      estado:Estado = NormalGuerrero) {
+          
   def aumentarKi (numero: Int) =
     copy(ki = Math.min(ki + numero, maximoKi))
     
-  def bajarKi (numero: Int) =
-    copy(ki = Math.max(ki-numero,0))
+  def bajarKi (numero: Int) = {
+    val nuevoGuerrero = copy(ki = Math.max(ki-numero,0))
+    if (nuevoGuerrero.ki == 0)
+      nuevoGuerrero.die
+    else nuevoGuerrero
+  }
+    
     
   def cargarKi = 
     tipo.subirKi(this)
@@ -49,6 +55,21 @@ case class Guerrero(
  
   def tieneCola = {
     tipo.tieneCola
+  }
+
+  def cambiarEstado(nuevoEstado: Estado) = {
+    (tipo match {
+      case Fusionado(original) => original
+      case Saiyajin(forma, cola) if (nuevoEstado == Inconsciente || nuevoEstado == Muerto) => copy(tipo = Saiyajin(NormalSaiyajin,cola))
+      case Androide if (nuevoEstado == Inconsciente) => throw new RuntimeException("Un androide no puede quedar inconsciente")
+      
+      case _ => this
+    })
+    .copy(estado=nuevoEstado)
+  }
+  
+  def die = {
+    cambiarEstado(Muerto)
   }
 }
   
