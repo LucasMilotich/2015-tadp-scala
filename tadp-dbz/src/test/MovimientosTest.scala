@@ -10,6 +10,7 @@ class MovimientosTest {
   val goku = new Guerrero("goku", Saiyajin(), 1500, 3000)
   val piccolo = new Guerrero ("piccolo", Namekusein, 500, 1000)
   val a18 = new Guerrero("a18", Androide, 0, 0)
+  val freezer= new Guerrero("freezer", Monstruo, 50,800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
 
   @Test
@@ -51,11 +52,18 @@ class MovimientosTest {
   }
 
   @Test
-  def `explota krilin y lastima a goku` = {
+  def `krilin no puede explotar por ser humano` = {
     val nuevoGoku = Explotar(goku)(krilin)
-    assertEquals(nuevoGoku.ki, 800)
+    fail()
   }
 
+  
+  @Test
+  def `explota freezer y lastima a goku` = {
+    val nuevoGoku = Explotar(goku)(freezer)
+    assertEquals(nuevoGoku.ki,1400)
+      }
+  
   @Test
    def `humano golpea a andriode` = {
   val perdedor= GolpesNinja(a18)(krilin)
