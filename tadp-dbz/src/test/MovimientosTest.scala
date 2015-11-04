@@ -3,6 +3,8 @@ package test
 import org.junit.Assert._
 import org.junit.Test
 import dbz._
+import dbz.GolpesNinja
+import dbz.Explotar
 
 class MovimientosTest {
 
@@ -85,4 +87,3 @@ class MovimientosTest {
     
   }
 }
-
