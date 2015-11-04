@@ -50,4 +50,12 @@ class MovimientosTest {
       FusionarCon(a18)(goku)
       fail()
   }
+  
+  @Test
+  def `explota krilin y lastima a goku`={
+      val nuevoKrilin= Explotar(krilin)(goku)
+      assertEquals(nuevoKrilin.ki,0)
+      }
+     
+      
 }
