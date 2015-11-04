@@ -30,3 +30,14 @@ case class GolpesNinja(atacado: Guerrero) extends TipoAtaque {
     }
   }
 }
+
+case class Onda(atacado: Guerrero, cantidad :Int) extends TipoAtaque{
+  def apply(guerrero: Guerrero) = {
+    if (! guerrero.podesLanzarOnda(cantidad)){
+      throw new RuntimeException("No tenes ki suficiente para lanzar la onda")
+    }
+    guerrero.lanzarOndaA(atacado, cantidad)
+    
+  }
+  
+}

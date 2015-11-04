@@ -71,5 +71,20 @@ case class Guerrero(
   def die = {
     cambiarEstado(Muerto)
   }
+  
+  def podesLanzarOnda(cantidad: Int) ={
+    cantidad < ki
+  }
+  
+  def lanzarOndaA(atacado:Guerrero, cantidad:Int) ={
+    //no distingo entre bateria y ki porque se tomo todo como un mismo valor numerico
+      atacado.tipo match {
+      case Monstruo => bajarKi(cantidad /2)
+      case _ => bajarKi(cantidad)
+      
+    }
+      this.bajarKi(cantidad)
+    
+  }
 }
   

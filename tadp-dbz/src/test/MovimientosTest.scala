@@ -86,4 +86,20 @@ class MovimientosTest {
      assertEquals(perdedor.ki, 330)
     
   }
+  
+  @Test //pasa lo mismo que en el test de explotar, no puedo testear al otro guerrero
+  def `krilin ataca a freezer` ={
+    val nuevoKrilin= Onda(freezer, 10)(krilin)
+    assertEquals(nuevoKrilin.ki, 340)
+    
+  }
+  
+  @Test
+  def `krilin queire atacar a freezaar con mas de su ki` ={
+    val nuevoKrilin= Onda(freezer, 1000)(krilin)
+   fail()
+    
+  }
+  
+  
 }
