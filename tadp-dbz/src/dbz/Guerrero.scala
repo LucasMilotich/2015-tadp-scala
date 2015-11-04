@@ -50,5 +50,7 @@ case class Guerrero(
   def tieneCola = {
     tipo.tieneCola
   }
+  
+ 
 }
   
