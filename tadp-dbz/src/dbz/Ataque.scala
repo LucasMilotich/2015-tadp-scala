@@ -4,8 +4,8 @@ abstract class TipoAtaque extends Movimiento {
 
 }
 
-case class Explotar(atacado: Guerrero) extends TipoAtaque {
-  def apply(guerrero: Guerrero, atacado : Option[Guerrero]) = {
+case object Explotar extends TipoAtaque {
+  def apply(guerrero: Guerrero,atacado :Guerrero) = {
     guerrero.tipo match {
       case Androide =>
         (guerrero.explota,
@@ -19,24 +19,25 @@ case class Explotar(atacado: Guerrero) extends TipoAtaque {
   }
 }
 
-case class GolpesNinja(atacado: Guerrero) extends TipoAtaque {
-  def apply(guerrero: Guerrero) = {
+case object GolpesNinja extends TipoAtaque {
+  def apply(guerrero: Guerrero,atacado: Guerrero) = {
     (guerrero.tipo, atacado.tipo) match {
-      case (Humano, Androide) => guerrero.bajarKi(10)
+      case (Humano, Androide) => (guerrero.bajarKi(10),atacado)
       case _ => if (guerrero.ki < atacado.ki) {
-        guerrero.bajarKi(20)
+        (guerrero.bajarKi(20),atacado)
 
-      } else atacado.bajarKi(20)
+      } else (guerrero,atacado.bajarKi(20))
     }
   }
 }
 
-case class Onda(atacado: Guerrero, cantidad :Int) extends TipoAtaque{
-  def apply(guerrero: Guerrero) = {
+case class Onda(cantidad :Int) extends TipoAtaque{
+  def apply(guerrero: Guerrero,atacado:Guerrero) = {
     if (! guerrero.podesLanzarOnda(cantidad)){
       throw new RuntimeException("No tenes ki suficiente para lanzar la onda")
     }
-    guerrero.lanzarOndaA(atacado, cantidad)
+    (guerrero.bajarKi(cantidad),guerrero.lanzarOndaA(atacado, cantidad))
+    // guerrero.lanzarOndaA(a,c) devuelve al atacado
     
   }
   

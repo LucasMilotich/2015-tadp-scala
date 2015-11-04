@@ -14,9 +14,9 @@ case class Guerrero(
     
   def bajarKi (numero: Int) = {
     val nuevoGuerrero = copy(ki = Math.max(ki-numero,0))
-   // if (nuevoGuerrero.ki == 0)
-   //   nuevoGuerrero.die
-   // else nuevoGuerrero
+    if (nuevoGuerrero.ki == 0)
+     nuevoGuerrero.die
+    else nuevoGuerrero
   }
     
     
@@ -49,7 +49,7 @@ case class Guerrero(
     }
   }
   
-  def explota ={
+  def explota  ={
     bajarKi(ki)
       }
  
@@ -57,20 +57,20 @@ case class Guerrero(
     tipo.tieneCola
   }
 
- // def cambiarEstado(nuevoEstado: Estado):Option[Guerrero] = {
-   // (tipo match {
-  //    case Fusionado(original) => original
- //     case Saiyajin(forma, cola) if (nuevoEstado == Inconsciente || nuevoEstado == Muerto) => copy(tipo = Saiyajin(NormalSaiyajin,cola))
-//      case Androide if (nuevoEstado == Inconsciente) => throw new RuntimeException("Un androide no puede quedar inconsciente")
+ def cambiarEstado(nuevoEstado: Estado) = {
+   (tipo match {
+      case Fusionado(original) => original
+      case Saiyajin(forma, cola) if (nuevoEstado == Inconsciente || nuevoEstado == Muerto) => copy(tipo = Saiyajin(NormalSaiyajin,cola))
+      case Androide if (nuevoEstado == Inconsciente) => throw new RuntimeException("Un androide no puede quedar inconsciente")
       
- //     case _ => this
-  //  })
-//    .copy(estado=nuevoEstado)
- // }
+     case _ => this
+  })
+    .copy(estado=nuevoEstado)
+ }
   
-//  def die :Option[Guerrero] = {
-//    cambiarEstado(Muerto)
-//  }
+  def die  = {
+    cambiarEstado(Muerto)
+  }
   
   def podesLanzarOnda(cantidad: Int) ={
     cantidad < ki
@@ -80,10 +80,10 @@ case class Guerrero(
     //no distingo entre bateria y ki porque se tomo todo como un mismo valor numerico
       atacado.tipo match {
       case Monstruo => bajarKi(cantidad /2)
-      case _ => bajarKi(cantidad)
+      case _ => bajarKi(cantidad*2)
       
     }
-      this.bajarKi(cantidad)
+     
     
   }
 }

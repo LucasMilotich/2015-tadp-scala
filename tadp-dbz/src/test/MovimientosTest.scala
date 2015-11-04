@@ -17,12 +17,14 @@ class MovimientosTest {
 
   @Test
   def `Guerrero_descansa_y_no_pasa_nada` = {
-    assertEquals(DejarseFajar(krilin), krilin)
+    val( descansa,elOtro)= DejarseFajar(krilin,goku)
+    assertEquals((descansa,elOtro), (krilin,goku))
   }
 
   @Test
   def `Humano_carga_ki` = {
-    assertEquals((CargarKi(krilin).ki,None),(450,None))
+    val(cargaKi,elOtro) = CargarKi(krilin,freezer)
+    assertEquals((cargaKi,elOtro),(450,50))
   }
 
   @Test
@@ -49,26 +51,26 @@ class MovimientosTest {
 
   @Test //no me acuerdo como se testeaba el error
   def `Fusion_Saiyajin_Androide_lanza_error` = {
-    FusionarCon(a18)(goku)
+    val excep=FusionarCon(a18,goku)
     fail()
   }
 
   @Test
   def `krilin no puede explotar por ser humano` = {
-    val nuevoGoku = Explotar(goku)(krilin)
+    val excep = Explotar(goku,krilin)
     fail()
   }
 
   
   @Test
   def `explota freezer y lastima a goku` = {
-    val nuevoGoku = Explotar(goku)(freezer)
-    assertEquals(nuevoGoku.ki,1400)
+    val (nuevoGoku, nuevoFreezer) = Explotar(goku,freezer)
+    assertEquals((nuevoGoku.ki, nuevoFreezer.ki),(1400,0))
       }
   
   @Test
    def `humano golpea a andriode` = {
-  val perdedor= GolpesNinja(a18)(krilin)
+  val perdedor= GolpesNinja(a18,krilin)
   assertEquals(perdedor.ki, 340)
     
   }
