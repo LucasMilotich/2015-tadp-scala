@@ -6,7 +6,8 @@ case class Guerrero(
       ki: Int,
       maximoKi: Int,
       items:Set[Item] = Set(),
-      movimientos: List[Movimiento] = List(),
+      movimientosAprendidos: List[Movimiento] = List(),
+      movimientosUtilizados: List[Movimiento] = List(),
       estado:Estado = NormalGuerrero) {
           
   def aumentarKi (numero: Int) =
@@ -38,7 +39,7 @@ case class Guerrero(
     copy(tipo = Fusionado(this),
         maximoKi = maximoKi + compa.maximoKi,
         ki = ki + compa.ki,
-        movimientos = movimientos ++ compa.movimientos)
+        movimientosAprendidos = movimientosAprendidos ++ compa.movimientosAprendidos)
   }
   
   def usarItem(unItem: Item, oponente: Guerrero) = {
@@ -99,9 +100,12 @@ case class Guerrero(
   def recibirOnda(cantidad:Int) ={
       tipo match {
       case Monstruo => bajarKi(cantidad /2)
+      case Androide => aumentarKi(cantidad)
       case _ => bajarKi(cantidad*2)
       
     }
   }
+  
+  
 }
   
