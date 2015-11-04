@@ -34,7 +34,7 @@ case class Guerrero(
     copy(tipo = Fusionado(this),
         maximoKi = maximoKi + compa.maximoKi,
         ki = ki + compa.ki,
-        movimientos = movimientos ++ compa.movimientos)
+        movimientosAprendidos = movimientosAprendidos ++ compa.movimientosAprendidos)
   }
   
   def usarItem(unItem: Item) = {
