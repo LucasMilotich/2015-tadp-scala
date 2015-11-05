@@ -6,7 +6,6 @@ abstract class Tipo(val formaDeDigerir: FormaDeDigerir = PasarVerguenza) {
   
   def tieneCola = false
   def puedeFusionarse = false
-  //def formaDeDigerir = PasarVerguenza
 }
   
 
@@ -30,5 +29,7 @@ case class Fusionado(original: Guerrero) extends Tipo
 
 abstract class FormaDeDigerir
 case object PasarVerguenza extends FormaDeDigerir
+case object Default extends FormaDeDigerir
 case object SoloAndroides extends FormaDeDigerir
 case object SoloHumanos extends FormaDeDigerir
+case object SoloUltimoGuerrero extends FormaDeDigerir

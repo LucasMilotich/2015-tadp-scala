@@ -11,11 +11,11 @@ class MovimientosTest {
   val goku = new Guerrero("goku", Saiyajin(), 1500, 3000)
   val piccolo = new Guerrero("piccolo", Namekusein, 500, 1000)
   val a18 = new Guerrero("a18", Androide, 0, 0)
-  val freezer = new Guerrero("freezer", Monstruo(SoloHumanos), 50, 800)
+  val freezer = new Guerrero("freezer", Monstruo(Default), 50, 800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
 
-  val cell = new Guerrero("cell", Monstruo(SoloHumanos), 50, 800)
-  val majinBuu = new Guerrero("majinBuu", Monstruo(SoloHumanos), 50, 800)
+  val cell = new Guerrero("cell", Monstruo(SoloAndroides), 50, 800)
+  val majinBuu = new Guerrero("majinBuu", Monstruo(SoloUltimoGuerrero), 50, 800)
 
   def assertKi(guerrero: Guerrero, cant: Int) = assertEquals(guerrero.ki, cant)
 
