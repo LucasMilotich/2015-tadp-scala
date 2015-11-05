@@ -99,13 +99,16 @@ case class Guerrero(
   
   def recibirOnda(cantidad:Int) ={
       tipo match {
-      case Monstruo => bajarKi(cantidad /2)
+      case Monstruo(_) => bajarKi(cantidad /2)
       case Androide => aumentarKi(cantidad)
       case _ => bajarKi(cantidad*2)
       
     }
   }
   
+  def formaDeDigerir = this.tipo.formaDeDigerir
   
+  def aprenderMovimientos(nuevosMovimientos: List[Movimiento]) = 
+         copy(movimientosAprendidos = movimientosAprendidos ++ nuevosMovimientos)  
 }
   

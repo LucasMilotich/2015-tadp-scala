@@ -2,7 +2,7 @@ package dbz
  
 
 trait Movimiento extends Function2[Guerrero,Guerrero,(Guerrero,Guerrero)] {
-   override def apply(guerrero: Guerrero, oponente: Guerrero): (Guerrero,Guerrero)
+   def apply(guerrero: Guerrero, oponente: Guerrero): (Guerrero,Guerrero)
  }
  
 case object DejarseFajar extends Movimiento {
@@ -38,5 +38,15 @@ case class Convertirse(formaNueva: FormaSaiyajin) extends Movimiento {
       case _ => guerrero
     },oponente)
   }
+}
+
+case object comerOponente extends Movimiento{
+   def apply(guerrero: Guerrero, oponente :Guerrero) = {
+     guerrero.formaDeDigerir match{
+       case PasarVerguenza => (guerrero, oponente)
+       //case SoloAndroides => if (oponente.tipo.]//(guerrero.cargarKi,oponente)
+       case _ => (guerrero.aprenderMovimientos(oponente.movimientosAprendidos), oponente)
+     }
+   }
 }
 

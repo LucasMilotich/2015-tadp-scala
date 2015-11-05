@@ -10,7 +10,7 @@ case object Explotar extends TipoAtaque {
       case Androide =>
         (guerrero.explota,
           atacado.recibiExplosionDe(guerrero))
-      case Monstruo =>
+      case Monstruo(_) =>
         (guerrero.explota,
           atacado.recibiExplosionDe(guerrero))
       case _ => throw new RuntimeException("No podes explotar")
