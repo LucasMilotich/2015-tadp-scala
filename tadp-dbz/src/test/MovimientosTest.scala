@@ -14,6 +14,9 @@ class MovimientosTest {
   val freezer = new Guerrero("freezer", Monstruo(SoloHumanos), 50, 800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
 
+  val cell = new Guerrero("cell", Monstruo(SoloHumanos), 50, 800)
+  val majinBuu = new Guerrero("majinBuu", Monstruo(SoloHumanos), 50, 800)
+
   def assertKi(guerrero: Guerrero, cant: Int) = assertEquals(guerrero.ki, cant)
 
   @Test
@@ -117,15 +120,36 @@ class MovimientosTest {
 
   @Test
   def krilin_come_oponente = {
-    val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer)
+    val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
     assertEquals(nuevoKrilin.movimientosAprendidos.size, krilin.movimientosAprendidos.size)
+    assertEquals(nuevoFreezer.estado, NormalGuerrero)
   }
 
   @Test
   def freezer_come_oponente = {
-    val (nuevoFreezer, nuevoKrilin) = comerOponente(freezer, krilin.aprenderMovimientos(List(CargarKi)))
+    val (nuevoFreezer, nuevoKrilin) = comerOponente(freezer, krilin.aprenderMovimiento(CargarKi))
+    
     assertEquals(nuevoFreezer.movimientosAprendidos.size, nuevoKrilin.movimientosAprendidos.size)
+    assertEquals(nuevoKrilin.estado, Muerto)
+  }
+
+  @Test
+  def cell_come_androide = {
+    val (nuevoFreezer, nuevoKrilin) = comerOponente(cell, a18.aprenderMovimiento(CargarKi))
+    //TODO
+  }
+
+  @Test
+  def cell_come_no_androide = {
+    val (nuevoFreezer, nuevoKrilin) = comerOponente(cell, krilin.aprenderMovimiento(CargarKi))
+    //TODO
+  }
+
+  @Test
+  def majinBuu_come_oponente = {
+    val (nuevoFreezer, nuevoKrilin) = comerOponente(majinBuu, krilin.aprenderMovimiento(CargarKi))
+    //TODO
   }
 
 }

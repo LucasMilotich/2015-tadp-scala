@@ -45,7 +45,7 @@ case object comerOponente extends Movimiento{
      guerrero.formaDeDigerir match{
        case PasarVerguenza => (guerrero, oponente)
        //case SoloAndroides => if (oponente.tipo.]//(guerrero.cargarKi,oponente)
-       case _ => (guerrero.aprenderMovimientos(oponente.movimientosAprendidos), oponente)
+       case _ => (guerrero.aprenderMovimientosDe(oponente) , oponente.morir)
      }
    }
 }
