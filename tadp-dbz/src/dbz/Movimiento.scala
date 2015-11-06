@@ -2,6 +2,11 @@ package dbz
 
 trait Movimiento extends Function2[Guerrero, Guerrero, (Guerrero, Guerrero)] {
   def apply(guerrero: Guerrero, oponente: Guerrero): (Guerrero, Guerrero)
+  
+  def cuantificadoSegun(g1: Guerrero, g2: Guerrero)(criterio: Criterio) = {
+    val (atacante,defensor) = apply(g1,g2)
+    criterio.analizar(atacante,defensor)
+  }
 }
 
 case object DejarseFajar extends Movimiento {

@@ -141,20 +141,18 @@ case class Guerrero(
   def quitarEsferas = {
     copy(items = this.items.filterNot(_.isInstanceOf[EsferasDelDragon]))
   }
- 
-  
-  def movimientoMasEfectivoContra(oponente: Guerrero, unCriterio: Criterio) = {
-    movimientosAprendidos.maxBy { movimiento => 
-      val (atacante,defensor) = movimiento.apply(this,oponente)
-      unCriterio.analizar(atacante,defensor)
-      }
+
+  def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio) = {
+    val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
+    if (ms == List()) throw new RuntimeException("No conviene ningun movimiento")
+    
+    ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
   }
   
-  
-  def pelearRound(movimiento: Movimiento, oponente: Guerrero) = {
+  def pelearRound(movimiento: Movimiento)(oponente: Guerrero) = {
     val (atacante,defensor) = movimiento.apply(this,oponente)
     val criterio = new Criterio({(at,df) => at.ki - df.ki})
-    val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante, criterio)
+    val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante)(criterio)
     
     movimientoAUtilizar.apply(defensor,atacante)
   }
