@@ -42,21 +42,27 @@ case object comerOponente extends Movimiento {
     guerrero.formaDeDigerir match {
       case PasarVerguenza => (guerrero, oponente)
       case SoloUltimoGuerrero => (guerrero.limpiarMovimientosRobados.aprenderMovimientosDe(oponente), oponente.morir)
-      case SoloAndroides if (oponente.sosAndroide) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir) // TODO 
-      case _ => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case SoloAndroides  if (oponente.sosDelTipo(Androide)) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case Default => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case _ => (guerrero, oponente)
     }
   }
 }
 
-  case class hacerMagia(estado: Estado) extends Movimiento{
-     def apply(guerrero: Guerrero, oponente: Guerrero) = {
+case class hacerMagia(estado: Estado, guerreroOpcional : Option[Guerrero]) extends Movimiento {
+  def apply(guerrero: Guerrero, oponente: Guerrero) = {
     guerrero.tipo match {
-      case Namekusein | Monstruo(_) if(guerrero.esferasCompletas) => {
-                                                                  (guerrero.cambiarEstado(estado).quitarEsferas, oponente.cambiarEstado(estado))
-      }
-      case _ => (guerrero,oponente)
+      case Namekusein | Monstruo(_) if (guerrero.esferasCompletas && guerreroOpcional.isEmpty) =>
+        (guerrero.cambiarEstado(estado).quitarEsferas, oponente.cambiarEstado(estado))
+        case Namekusein | Monstruo(_) if (guerrero.esferasCompletas && !guerreroOpcional.isEmpty) =>
+            if (oponente.equals(guerreroOpcional)) {
+              (guerrero, oponente.cambiarEstado(estado))
+            }
+            else
+             (guerrero.cambiarEstado(estado),oponente)     
+      case _ => (guerrero, oponente)
     }
-    }
-     
   }
+
+}
 

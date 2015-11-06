@@ -120,6 +120,15 @@ class MovimientosTest {
   }
 
   @Test
+  def prueba_tipos = {
+    assertEquals(true, cell.sosDelTipo(Monstruo(SoloAndroides)))
+    assertEquals(false, cell.sosDelTipo(Monstruo(SoloUltimoGuerrero)))
+    assertEquals(true, a18.sosDelTipo(Androide))
+    assertEquals(false, krilin.sosDelTipo(Androide))
+    assertEquals(true, krilin.sosDelTipo(Humano))
+  }
+
+  @Test
   def krilin_come_oponente = {
     val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
@@ -143,7 +152,7 @@ class MovimientosTest {
     assertEquals(nuevoA18.estado, Muerto)
   }
 
-  @Test //TODO falta resolver este caso de uso
+  @Test
   def cell_come_no_androide = {
     val (nuevoCell, nuevoKrilin) = comerOponente(cell, krilin.aprenderMovimiento(CargarKi))
 
@@ -183,33 +192,31 @@ class MovimientosTest {
     assertEquals(false, nuevoGoku.esferasCompletas)
   }
 
-  @Test
-  def majinBuu_hace_Magia_con_esferas = {
-    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente)(majinBuu.agregarItems(esferasCompletas), goku)
-
-    assertEquals(Inconsciente, nuevoMajinBuu.estado)
-    assertEquals(Inconsciente, nuevoGoku.estado)
-    assertEquals(false, nuevoMajinBuu.esferasCompletas)
-  }
+//  @Test
+//  def majinBuu_hace_Magia_con_esferas = {
+//    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, null)(majinBuu.agregarItems(esferasCompletas), goku)
+//
+//    assertEquals(Inconsciente, nuevoMajinBuu.estado)
+//    assertEquals(Inconsciente, nuevoGoku.estado)
+//    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+//  }
 
   @Test
   def majinBuu_hace_Magia_sin_esferas = {
-    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente)(majinBuu, goku)
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, null)(majinBuu, goku)
 
     assertEquals(NormalGuerrero, nuevoMajinBuu.estado)
     assertEquals(NormalGuerrero, nuevoGoku.estado)
     assertEquals(false, nuevoMajinBuu.esferasCompletas)
   }
-  
-    @Test
+
+  @Test
   def krilin_no_puede_hacer_magia = {
-    val (nuevoKrilin, nuevoGoku) = hacerMagia(Inconsciente)(krilin.agregarItems(esferasCompletas), goku)
+    val (nuevoKrilin, nuevoGoku) = hacerMagia(Inconsciente, null)(krilin.agregarItems(esferasCompletas), goku)
 
     assertEquals(NormalGuerrero, nuevoKrilin.estado)
     assertEquals(NormalGuerrero, nuevoGoku.estado)
     assertEquals(true, nuevoKrilin.esferasCompletas)
   }
-  
-  
 
 }

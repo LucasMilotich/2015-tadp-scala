@@ -129,7 +129,10 @@ case class Guerrero(
   def limpiarMovimientosRobados =
     copy(movimientosRobados = List())
 
-  def sosAndroide = true // TODO
+  def sosDelTipo(tipo: Tipo) = tipo match{
+    case Monstruo(x) => this.tipo.equals(Monstruo(x))
+    case _ => this.tipo.equals(tipo)
+  }
 
   def esferasCompletas = {
     (1 to 7).forall(x => this.tieneItem(EsferasDelDragon(x)))

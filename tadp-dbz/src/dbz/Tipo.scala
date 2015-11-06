@@ -9,8 +9,6 @@ abstract class Tipo(val formaDeDigerir: FormaDeDigerir = PasarVerguenza) {
   
 }
   
-
-
 case object Androide extends Tipo {
   override def subirKi(guerrero:Guerrero) = guerrero.aumentarKi(0)
 }
