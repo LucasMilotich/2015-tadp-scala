@@ -1,5 +1,7 @@
 package dbz
 
+import scala.collection.mutable._
+
 case class Guerrero(
     nombre: String,
     tipo: Tipo,
@@ -153,8 +155,23 @@ case class Guerrero(
     val (atacante,defensor) = movimiento.apply(this,oponente)
     val criterio = new Criterio({(at,df) => at.ki - df.ki})
     val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante)(criterio)
+    val (d2,a2) = movimientoAUtilizar.apply(defensor,atacante)
+    (a2,d2)
+  }
+  
+  def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio) = {
+    var plan:List[Movimiento] = List()
+    var combate:(Guerrero,Guerrero) = (this,oponente)
     
-    movimientoAUtilizar.apply(defensor,atacante)
+    for (i <- 1 to cantRounds) {
+      var movimientoConveniente = combate._1.movimientoMasEfectivoContra(combate._2)(criterio)
+      
+      //como se agrega a una lista mutable???????'
+      plan = plan + movimientoConveniente
+      
+      combate = combate._1.pelearRound(movimientoConveniente)(combate._2)
+    }
+    plan
   }
 }
   
