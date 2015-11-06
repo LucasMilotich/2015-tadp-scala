@@ -192,9 +192,18 @@ class MovimientosTest {
     assertEquals(false, nuevoGoku.esferasCompletas)
   }
 
+  @Test
+  def majinBuu_hace_Magia_con_esferas = {
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, None)(majinBuu.agregarItems(esferasCompletas), goku)
+
+    assertEquals(Inconsciente, nuevoMajinBuu.estado)
+    assertEquals(Inconsciente, nuevoGoku.estado)
+    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+  }
+  
 //  @Test
-//  def majinBuu_hace_Magia_con_esferas = {
-//    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, null)(majinBuu.agregarItems(esferasCompletas), goku)
+//  def majinBuu_hace_Magia_a_el_mismo = {
+//    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, majinBuu)(majinBuu.agregarItems(esferasCompletas), goku)
 //
 //    assertEquals(Inconsciente, nuevoMajinBuu.estado)
 //    assertEquals(Inconsciente, nuevoGoku.estado)
