@@ -7,6 +7,7 @@ import dbz._
 
 class MovimientosTest {
 
+  val esferasCompletas: Set[Item] = Set(EsferasDelDragon(1), EsferasDelDragon(2), EsferasDelDragon(3), EsferasDelDragon(4), EsferasDelDragon(5), EsferasDelDragon(6), EsferasDelDragon(7))
   val krilin = new Guerrero("krilin", Humano, 350, 1500)
   val goku = new Guerrero("goku", Saiyajin(), 1500, 3000)
   val piccolo = new Guerrero("piccolo", Namekusein, 500, 1000)
@@ -167,5 +168,48 @@ class MovimientosTest {
     assertEquals(nuevoMajinBuu2.movimientosRobados.size, nuevoKrilin.movimientosAprendidos.size)
     assertEquals(nuevoKrilin.estado, Muerto)
   }
+
+  @Test
+  def goku_tiene_todas_las_esferas = {
+    val nuevoGoku = goku.agregarItems(esferasCompletas)
+    assertEquals(true, nuevoGoku.esferasCompletas)
+  }
+
+  @Test
+  def goku_no_tiene_todas_las_esferas = {
+    val items: Set[Item] = Set(EsferasDelDragon(1), EsferasDelDragon(2))
+    val nuevoGoku = goku.agregarItems(items)
+
+    assertEquals(false, nuevoGoku.esferasCompletas)
+  }
+
+  @Test
+  def majinBuu_hace_Magia_con_esferas = {
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente)(majinBuu.agregarItems(esferasCompletas), goku)
+
+    assertEquals(Inconsciente, nuevoMajinBuu.estado)
+    assertEquals(Inconsciente, nuevoGoku.estado)
+    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+  }
+
+  @Test
+  def majinBuu_hace_Magia_sin_esferas = {
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente)(majinBuu, goku)
+
+    assertEquals(NormalGuerrero, nuevoMajinBuu.estado)
+    assertEquals(NormalGuerrero, nuevoGoku.estado)
+    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+  }
+  
+    @Test
+  def krilin_no_puede_hacer_magia = {
+    val (nuevoKrilin, nuevoGoku) = hacerMagia(Inconsciente)(krilin.agregarItems(esferasCompletas), goku)
+
+    assertEquals(NormalGuerrero, nuevoKrilin.estado)
+    assertEquals(NormalGuerrero, nuevoGoku.estado)
+    assertEquals(true, nuevoKrilin.esferasCompletas)
+  }
+  
+  
 
 }

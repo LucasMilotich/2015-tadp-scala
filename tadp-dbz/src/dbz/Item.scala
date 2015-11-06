@@ -12,8 +12,7 @@ case object semillaDelErmitanio extends Item {
 
 case object fotoDeLaLuna extends Item
 
-case class EsferasDelDragon(val cantidad: Int) extends Item {
-  def todasLasEsferas = cantidad == 7
+case class EsferasDelDragon(cantidad: Int) extends Item {
 }
 
 case class arma(tipo: TipoArma) extends Item {

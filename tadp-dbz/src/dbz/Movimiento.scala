@@ -48,3 +48,15 @@ case object comerOponente extends Movimiento {
   }
 }
 
+  case class hacerMagia(estado: Estado) extends Movimiento{
+     def apply(guerrero: Guerrero, oponente: Guerrero) = {
+    guerrero.tipo match {
+      case Namekusein | Monstruo(_) if(guerrero.esferasCompletas) => {
+                                                                  (guerrero.cambiarEstado(estado).quitarEsferas, oponente.cambiarEstado(estado))
+      }
+      case _ => (guerrero,oponente)
+    }
+    }
+     
+  }
+

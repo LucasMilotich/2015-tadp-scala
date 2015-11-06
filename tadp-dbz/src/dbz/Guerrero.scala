@@ -30,9 +30,6 @@ case class Guerrero(
   def cargarKi =
     tipo.subirKi(this)
 
-  def tieneItem(un_item: Item) =
-    items.contains(un_item)
-
   def multiplicarMaximoKi(n: Int) =
     copy(maximoKi = maximoKi * n)
 
@@ -58,6 +55,13 @@ case class Guerrero(
     val nuevosItems = items.+(unItem)
     copy(items = nuevosItems)
   }
+
+  def agregarItems(nuevosItems: Set[Item]) = {
+    copy(items = items ++ nuevosItems)
+  }
+
+  def tieneItem(un_item: Item) =
+    items.contains(un_item)
 
   def reemplazarItem(itemFuera: Item, itemDentro: Item) =
     sacarItem(itemFuera).agregarItem(itemDentro)
@@ -111,13 +115,6 @@ case class Guerrero(
     this.aprenderMovimientosDe(oponente)
   }
 
-  def hacerMagia(estado: Estado, guerrero1: Guerrero, guerrero2: Option[Guerrero]) = {
-    this.tipo match {
-      case Namekusein | Monstruo(_) if(this.esferasCompletas) => "A"
-      case _ => "ole"
-    }
-  }
-
   def formaDeDigerir = this.tipo.formaDeDigerir
 
   def aprenderMovimiento(movimiento: Movimiento) =
@@ -132,14 +129,15 @@ case class Guerrero(
   def limpiarMovimientosRobados =
     copy(movimientosRobados = List())
 
-  def sosAndroide = true
-  
-  def esferasCompletas = {true //TODO
-//    this.items match {
-//    case EsferasDelDragon(cant) => asd
-//    case _ => false
-//  }
+  def sosAndroide = true // TODO
+
+  def esferasCompletas = {
+    (1 to 7).forall(x => this.tieneItem(EsferasDelDragon(x)))
   }
-  
+
+  def quitarEsferas = {
+    copy(items = this.items.filterNot(_.isInstanceOf[EsferasDelDragon]))
+  }
+
 }
   
