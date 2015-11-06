@@ -21,7 +21,7 @@ case class Guerrero(
   }
 
   def bajarKiHasta(numero: Int) = {
-    require(numero >= 0 && numero < ki, "Numero de Ki inválido para bajar")
+    require(numero >= 0 && numero < ki, "Numero de Ki invalido para bajar")
     if (numero == 0) morir
     else copy(ki = numero)
   }
