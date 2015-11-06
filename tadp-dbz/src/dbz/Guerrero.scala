@@ -111,6 +111,13 @@ case class Guerrero(
     this.aprenderMovimientosDe(oponente)
   }
 
+  def hacerMagia(estado: Estado, guerrero1: Guerrero, guerrero2: Option[Guerrero]) = {
+    this.tipo match {
+      case Namekusein | Monstruo(_) if(this.esferasCompletas) => "A"
+      case _ => "ole"
+    }
+  }
+
   def formaDeDigerir = this.tipo.formaDeDigerir
 
   def aprenderMovimiento(movimiento: Movimiento) =
@@ -126,6 +133,13 @@ case class Guerrero(
     copy(movimientosRobados = List())
 
   def sosAndroide = true
-
+  
+  def esferasCompletas = {true //TODO
+//    this.items match {
+//    case EsferasDelDragon(cant) => asd
+//    case _ => false
+//  }
+  }
+  
 }
   
