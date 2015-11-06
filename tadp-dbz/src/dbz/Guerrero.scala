@@ -149,5 +149,14 @@ case class Guerrero(
       unCriterio.analizar(atacante,defensor)
       }
   }
+  
+  
+  def pelearRound(movimiento: Movimiento, oponente: Guerrero) = {
+    val (atacante,defensor) = movimiento.apply(this,oponente)
+    val criterio = new Criterio({(at,df) => at.ki - df.ki})
+    val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante, criterio)
+    
+    movimientoAUtilizar.apply(defensor,atacante)
+  }
 }
   
