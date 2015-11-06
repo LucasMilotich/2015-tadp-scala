@@ -141,6 +141,13 @@ case class Guerrero(
   def quitarEsferas = {
     copy(items = this.items.filterNot(_.isInstanceOf[EsferasDelDragon]))
   }
-
+ 
+  
+  def movimientoMasEfectivoContra(oponente: Guerrero, unCriterio: Criterio) = {
+    movimientosAprendidos.maxBy { movimiento => 
+      val (atacante,defensor) = movimiento.apply(this,oponente)
+      unCriterio.analizar(atacante,defensor)
+      }
+  }
 }
   
