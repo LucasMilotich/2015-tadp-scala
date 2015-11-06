@@ -69,3 +69,11 @@ case class Fuego(municiones: Int) extends TipoArma {
       guerrero
   }
 }
+case class usarItem(unItem: Item) extends Movimiento {
+  def apply(guerrero: Guerrero, oponente: Guerrero) = {
+    if (guerrero.tieneItem(unItem))
+      unItem.aplicarEn(guerrero, oponente)
+    else
+      (guerrero, oponente)
+  }
+}
