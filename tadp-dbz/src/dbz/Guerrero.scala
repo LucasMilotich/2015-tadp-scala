@@ -7,6 +7,7 @@ case class Guerrero(
     maximoKi: Int,
     items: Set[Item] = Set(),
     movimientosAprendidos: List[Movimiento] = List(),
+    movimientosRobados: List[Movimiento] = List(),
     movimientosUtilizados: List[Movimiento] = List(),
     estado: Estado = NormalGuerrero) {
 
@@ -106,6 +107,10 @@ case class Guerrero(
     }
   }
 
+  def comer(oponente: Guerrero) = {
+    this.aprenderMovimientosDe(oponente)
+  }
+
   def formaDeDigerir = this.tipo.formaDeDigerir
 
   def aprenderMovimiento(movimiento: Movimiento) =
@@ -115,6 +120,12 @@ case class Guerrero(
     copy(movimientosAprendidos = movimientosAprendidos ++ nuevosMovimientos)
 
   def aprenderMovimientosDe(oponente: Guerrero) =
-    this.aprenderMovimientos(oponente.movimientosAprendidos)
+    copy(movimientosRobados = movimientosRobados ++ oponente.movimientosAprendidos)
+
+  def limpiarMovimientosRobados =
+    copy(movimientosRobados = List())
+
+  def sosAndroide = true
+
 }
   

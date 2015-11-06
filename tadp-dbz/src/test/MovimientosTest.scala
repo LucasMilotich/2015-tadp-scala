@@ -122,34 +122,50 @@ class MovimientosTest {
   def krilin_come_oponente = {
     val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
-    assertEquals(nuevoKrilin.movimientosAprendidos.size, krilin.movimientosAprendidos.size)
+    assertEquals(nuevoKrilin.movimientosRobados.size, krilin.movimientosRobados.size)
     assertEquals(nuevoFreezer.estado, NormalGuerrero)
   }
 
   @Test
   def freezer_come_oponente = {
     val (nuevoFreezer, nuevoKrilin) = comerOponente(freezer, krilin.aprenderMovimiento(CargarKi))
-    
-    assertEquals(nuevoFreezer.movimientosAprendidos.size, nuevoKrilin.movimientosAprendidos.size)
+
+    assertEquals(nuevoFreezer.movimientosRobados.size, nuevoKrilin.movimientosAprendidos.size)
     assertEquals(nuevoKrilin.estado, Muerto)
   }
 
   @Test
   def cell_come_androide = {
-    val (nuevoFreezer, nuevoKrilin) = comerOponente(cell, a18.aprenderMovimiento(CargarKi))
-    //TODO
+    val (nuevoCell, nuevoA18) = comerOponente(cell, a18.aprenderMovimiento(CargarKi))
+
+    assertEquals(nuevoCell.movimientosRobados.size, nuevoA18.movimientosAprendidos.size)
+    assertEquals(nuevoA18.estado, Muerto)
   }
 
-  @Test
+  @Test //TODO falta resolver este caso de uso
   def cell_come_no_androide = {
-    val (nuevoFreezer, nuevoKrilin) = comerOponente(cell, krilin.aprenderMovimiento(CargarKi))
-    //TODO
+    val (nuevoCell, nuevoKrilin) = comerOponente(cell, krilin.aprenderMovimiento(CargarKi))
+
+    assertEquals(nuevoCell.movimientosRobados.size, cell.movimientosRobados.size)
+    assertEquals(nuevoKrilin.estado, NormalGuerrero)
   }
 
   @Test
   def majinBuu_come_oponente = {
-    val (nuevoFreezer, nuevoKrilin) = comerOponente(majinBuu, krilin.aprenderMovimiento(CargarKi))
-    //TODO
+    val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
+    val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimiento(CargarKi))
+
+    assertEquals(nuevoMajinBuu2.movimientosRobados.size, nuevoKrilin.movimientosAprendidos.size)
+    assertEquals(nuevoKrilin.estado, Muerto)
+  }
+
+  @Test
+  def majinBuu_come_oponente2 = {
+    val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimiento(CargarKi))
+    val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
+
+    assertEquals(nuevoMajinBuu2.movimientosRobados.size, nuevoKrilin.movimientosAprendidos.size)
+    assertEquals(nuevoKrilin.estado, Muerto)
   }
 
 }

@@ -41,8 +41,8 @@ case object comerOponente extends Movimiento {
   def apply(guerrero: Guerrero, oponente: Guerrero) = {
     guerrero.formaDeDigerir match {
       case PasarVerguenza => (guerrero, oponente)
-      // case SoloUltimoGuerrero => if (oponente.tipo.]
-      //case SoloAndroides => if (oponente.tipo.]//(guerrero.cargarKi,oponente)
+      case SoloUltimoGuerrero => (guerrero.limpiarMovimientosRobados.aprenderMovimientosDe(oponente), oponente.morir)
+      case SoloAndroides if (oponente.sosAndroide) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir) // TODO 
       case _ => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
     }
   }
