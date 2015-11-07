@@ -143,10 +143,10 @@ case class Guerrero(
   }
 
   def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio) = {
-    val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
-    if (ms == List()) throw new RuntimeException("No conviene ningun movimiento")
-    
-    ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
+    //val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
+    //if (ms == List()) throw new RuntimeException("No conviene ningun movimiento a " + nombre)
+    //ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
+    movimientosAprendidos.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
   }
   
   def pelearRound(movimiento: Movimiento)(oponente: Guerrero) = {
