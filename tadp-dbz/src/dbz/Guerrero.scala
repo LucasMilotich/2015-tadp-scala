@@ -1,7 +1,5 @@
 package dbz
 
-import scala.collection.mutable._
-
 case class Guerrero(
     nombre: String,
     tipo: Tipo,
