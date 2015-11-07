@@ -164,14 +164,14 @@ case class Guerrero(
     var combate:(Guerrero,Guerrero) = (this,oponente)
     
     for (i <- 1 to cantRounds) {
-      var movimientoConveniente = combate._1.movimientoMasEfectivoContra(combate._2)(criterio)
-      
-      //como se agrega a una lista mutable???????'
-      plan = plan + movimientoConveniente
+      val movimientoConveniente = combate._1.movimientoMasEfectivoContra(combate._2)(criterio)      
+      plan = plan.+:(movimientoConveniente)
       
       combate = combate._1.pelearRound(movimientoConveniente)(combate._2)
     }
     plan
   }
+  
+  
 }
   
