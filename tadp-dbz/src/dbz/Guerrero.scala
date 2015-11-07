@@ -139,7 +139,7 @@ case class Guerrero(
   }
 
   def quitarEsferas = {
-    copy(items = this.items.filterNot(_.isInstanceOf[EsferasDelDragon]))
+    copy(items = this.items.filterNot(_.sosEsfera))
   }
 
   def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio) = {

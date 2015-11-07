@@ -2,6 +2,8 @@ package dbz
 
 abstract class Item {
   def aplicarEn(guerrero: Guerrero, oponente: Guerrero): (Guerrero, Guerrero) = (guerrero, oponente)
+  
+  def sosEsfera = false
 }
 
 case object semillaDelErmitanio extends Item {
@@ -13,6 +15,7 @@ case object semillaDelErmitanio extends Item {
 case object fotoDeLaLuna extends Item
 
 case class EsferasDelDragon(cantidad: Int) extends Item {
+  override def sosEsfera = true
 }
 
 case class arma(tipo: TipoArma) extends Item {
