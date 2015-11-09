@@ -21,7 +21,7 @@ abstract class FormaSaiyajin {
   
   def subirNivel(g: Guerrero): Guerrero = {
     g.multiplicarMaximoKi(5)
-      .copy(tipo = Saiyajin(SuperSaiyajin()))
+      .cambiarTipo(Saiyajin(SuperSaiyajin()))
   }
   
 }
@@ -35,6 +35,6 @@ case class SuperSaiyajin(var nivel:Int = 1) extends FormaSaiyajin {
  
   override def subirNivel(g: Guerrero) = {
     g.multiplicarMaximoKi(5 * nivel)
-      .copy(tipo = Saiyajin(SuperSaiyajin(nivel+1)))
+     .cambiarTipo(Saiyajin(SuperSaiyajin(nivel+1)))
   }
 }

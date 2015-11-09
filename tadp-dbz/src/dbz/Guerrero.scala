@@ -41,9 +41,7 @@ case class Guerrero(
   }
 
   def usarItem(unItem: Item, oponente: Guerrero) = {
-    val (nuevoG, nuevoOp) = unItem.aplicarEn(this, oponente)
-
-    (nuevoG, nuevoOp)
+    unItem.aplicarEn(this, oponente)
   }
 
   def sacarItem(unItem: Item) = {
@@ -66,7 +64,8 @@ case class Guerrero(
   def reemplazarItem(itemFuera: Item, itemDentro: Item) =
     sacarItem(itemFuera).agregarItem(itemDentro)
 
-  def cambiarTipo(nuevoTipo: Tipo) = copy(tipo = nuevoTipo)
+  def cambiarTipo(nuevoTipo: Tipo) =
+    copy(tipo = nuevoTipo)
 
   def recibiExplosionDe(atacante: Guerrero) = {
     atacante.tipo match {
@@ -86,9 +85,10 @@ case class Guerrero(
   def cambiarEstado(nuevoEstado: Estado) = {
     (tipo match {
       case Fusionado(original) => original
-      case Saiyajin(forma, cola) if (nuevoEstado == Inconsciente || nuevoEstado == Muerto) => copy(tipo = Saiyajin(NormalSaiyajin, cola))
-      case Androide if (nuevoEstado == Inconsciente) => throw new RuntimeException("Un androide no puede quedar inconsciente")
-
+      case Saiyajin(forma, cola) if (nuevoEstado == Inconsciente || nuevoEstado == Muerto)
+        => copy(tipo = Saiyajin(NormalSaiyajin, cola))
+      case Androide if (nuevoEstado == Inconsciente)
+        => throw new RuntimeException("Un androide no puede quedar inconsciente")
       case _ => this
     })
       .copy(estado = nuevoEstado)
@@ -96,6 +96,7 @@ case class Guerrero(
 
   def morir = {
     cambiarEstado(Muerto)
+    throw new RuntimeException("Murio " + nombre)
   }
 
   def podesLanzarOnda(cantidad: Int) = {
@@ -107,18 +108,22 @@ case class Guerrero(
       case Monstruo(_) => bajarKi(cantidad / 2)
       case Androide => aumentarKi(cantidad)
       case _ => bajarKi(cantidad * 2)
-
     }
   }
 
   def comer(oponente: Guerrero) = {
-    this.aprenderMovimientosDe(oponente)
+    aprenderMovimientosDe(oponente)
   }
 
-  def formaDeDigerir = this.tipo.formaDeDigerir
+  def formaDeDigerir = {
+    tipo match {
+      case Monstruo(formaDeDigerir) => formaDeDigerir
+      case _ => DigestionDefault
+    }
+  }
 
   def aprenderMovimiento(movimiento: Movimiento) =
-    copy(movimientosAprendidos = movimientosAprendidos ::: List(movimiento))
+    aprenderMovimientos(List(movimiento))
 
   def aprenderMovimientos(nuevosMovimientos: List[Movimiento]) =
     copy(movimientosAprendidos = movimientosAprendidos ++ nuevosMovimientos)
@@ -129,24 +134,22 @@ case class Guerrero(
   def limpiarMovimientosRobados =
     copy(movimientosRobados = List())
 
-  def sosDelTipo(tipo: Tipo) = tipo match{
-    case Monstruo(x) => this.tipo.equals(Monstruo(x))
-    case _ => this.tipo.equals(tipo)
-  }
-
   def esferasCompletas = {
     (1 to 7).forall(x => this.tieneItem(EsferasDelDragon(x)))
   }
 
   def quitarEsferas = {
-    copy(items = this.items.filterNot(_.sosEsfera))
+    copy(items = items.filterNot(_.sosEsfera))
   }
 
-  def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio) = {
-    //val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
-    //if (ms == List()) throw new RuntimeException("No conviene ningun movimiento a " + nombre)
-    //ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
-    movimientosAprendidos.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) }
+  def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio): Option[Movimiento] = {
+    val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
+    
+    if (ms == List()) {
+      None
+    } else {
+      Some(ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) })
+    }
   }
   
   def pelearRound(movimiento: Movimiento)(oponente: Guerrero) = {

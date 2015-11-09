@@ -1,6 +1,6 @@
 package dbz
 
-abstract class Tipo(val formaDeDigerir: FormaDeDigerir = PasarVerguenza) {
+abstract class Tipo {
     
   def subirKi(g: Guerrero) = g.aumentarKi(100)
   
@@ -17,7 +17,7 @@ case object Namekusein extends Tipo {
   override def puedeFusionarse = true
 }
 
-case class Monstruo(override val formaDeDigerir: FormaDeDigerir) extends Tipo{
+case class Monstruo(formaDeDigerir: FormaDeDigerir = DigestionDefault) extends Tipo{
 }
 
 case object Humano extends Tipo {
@@ -29,8 +29,7 @@ case class Fusionado(original: Guerrero) extends Tipo
 
 abstract class FormaDeDigerir
 
-case object PasarVerguenza extends FormaDeDigerir
-case object Default extends FormaDeDigerir
+case object DigestionDefault extends FormaDeDigerir
 case object SoloAndroides extends FormaDeDigerir
 case object SoloHumanos extends FormaDeDigerir
 case object SoloUltimoGuerrero extends FormaDeDigerir

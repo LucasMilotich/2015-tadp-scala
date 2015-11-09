@@ -12,7 +12,7 @@ class MovimientosTest {
   val goku = new Guerrero("goku", Saiyajin(), 1500, 3000)
   val piccolo = new Guerrero("piccolo", Namekusein, 500, 1000)
   val a18 = new Guerrero("a18", Androide, 0, 0)
-  val freezer = new Guerrero("freezer", Monstruo(Default), 50, 800)
+  val freezer = new Guerrero("freezer", Monstruo(DigestionDefault), 50, 800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
 
   val cell = new Guerrero("cell", Monstruo(SoloAndroides), 50, 800)
@@ -117,15 +117,6 @@ class MovimientosTest {
   def `krilin_ataca_con_onda_1000_a_freezer_y_falla` = {
     Onda(1000)(krilin, freezer)
     fail()
-  }
-
-  @Test
-  def prueba_tipos = {
-    assertEquals(true, cell.sosDelTipo(Monstruo(SoloAndroides)))
-    assertEquals(false, cell.sosDelTipo(Monstruo(SoloUltimoGuerrero)))
-    assertEquals(true, a18.sosDelTipo(Androide))
-    assertEquals(false, krilin.sosDelTipo(Androide))
-    assertEquals(true, krilin.sosDelTipo(Humano))
   }
 
   @Test

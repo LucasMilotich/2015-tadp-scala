@@ -45,10 +45,9 @@ case class Convertirse(formaNueva: FormaSaiyajin) extends Movimiento {
 case object comerOponente extends Movimiento {
   def apply(guerrero: Guerrero, oponente: Guerrero) = {
     guerrero.formaDeDigerir match {
-      case PasarVerguenza => (guerrero, oponente)
       case SoloUltimoGuerrero => (guerrero.limpiarMovimientosRobados.aprenderMovimientosDe(oponente), oponente.morir)
-      case SoloAndroides  if (oponente.sosDelTipo(Androide)) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
-      case Default => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case SoloAndroides  if (oponente.tipo == Androide) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case DigestionDefault => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
       case _ => (guerrero, oponente)
     }
   }
