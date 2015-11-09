@@ -1,5 +1,9 @@
 package dbz
 
+import scala.util.Try
+import scala.util.Failure
+import scala.util.Success
+
 case class Guerrero(
     nombre: String,
     tipo: Tipo,
@@ -152,23 +156,30 @@ case class Guerrero(
     }
   }
   
-  def pelearRound(movimiento: Movimiento)(oponente: Guerrero) = {
-    val (atacante,defensor) = movimiento.apply(this,oponente)
+  
+  def pelearRound(movimiento: Movimiento)(oponente: Guerrero): Try[(Guerrero,Guerrero)] = {
+    var (atacante,defensor) = movimiento.apply(this,oponente)
     val criterio = new Criterio({(at,df) => at.ki - df.ki})
     val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante)(criterio)
-    val (d2,a2) = movimientoAUtilizar.apply(defensor,atacante)
-    (a2,d2)
+    (defensor,atacante) = movimientoAUtilizar.apply(defensor,atacante)
+    (atacante,defensor)
   }
   
-  def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio) = {
+  
+  def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio): List[Movimiento] = {
     var plan:List[Movimiento] = List()
-    var combate:(Guerrero,Guerrero) = (this,oponente)
+    var combate:Try[(Guerrero,Guerrero)] = Success(this,oponente)
     
     for (i <- 1 to cantRounds) {
-      val movimientoConveniente = combate._1.movimientoMasEfectivoContra(combate._2)(criterio)      
-      plan = plan.+:(movimientoConveniente)
+      val movimientoConveniente = combate.get._1.movimientoMasEfectivoContra(combate.get._2)(criterio)      
       
-      combate = combate._1.pelearRound(movimientoConveniente)(combate._2)
+      movimientoConveniente match {
+        case Some(movimiento:Movimiento) => {
+                plan = plan.+:(movimiento)
+                combate = combate.get._1.pelearRound(movimiento)(combate.get._2)               
+        }
+        case None => throw new RuntimeException("No encuentra plan de ataque")
+      }
     }
     plan
   }
