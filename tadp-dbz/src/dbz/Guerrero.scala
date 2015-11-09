@@ -155,14 +155,25 @@ case class Guerrero(
       Some(ms.maxBy { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) })
     }
   }
-  
-  
-  def pelearRound(movimiento: Movimiento)(oponente: Guerrero): Try[(Guerrero,Guerrero)] = {
-    var (atacante,defensor) = movimiento.apply(this,oponente)
-    val criterio = new Criterio({(at,df) => at.ki - df.ki})
-    val movimientoAUtilizar = defensor.movimientoMasEfectivoContra(atacante)(criterio)
-    (defensor,atacante) = movimientoAUtilizar.apply(defensor,atacante)
-    (atacante,defensor)
+
+  def pelearRound(movimiento: Movimiento)(oponente: Guerrero): Try[(Guerrero, Guerrero)] = {
+    val combate: Try[(Guerrero, Guerrero)] = Try(movimiento.apply(this, oponente))
+    val mayorVentaja = new Criterio({ (at, df) => at.ki - df.ki })
+    val menorDesventaja = new Criterio({ (at, df) => (-1) / (at.ki - df.ki) })
+
+    combate match {
+      case Success((atacante, defensor)) => {
+        var movimientoAutilizar: Option[Movimiento] = defensor.movimientoMasEfectivoContra(atacante)(mayorVentaja)
+        if (movimientoAutilizar == None) movimientoAutilizar = defensor.movimientoMasEfectivoContra(atacante)(menorDesventaja)
+
+        val contraataque = Try(movimientoAutilizar.get.apply(defensor, atacante))
+
+        if (contraataque.isSuccess) Success(contraataque.get._2, contraataque.get._1)
+        else contraataque
+      }
+      case Failure(_) => combate
+    }
+
   }
   
   
