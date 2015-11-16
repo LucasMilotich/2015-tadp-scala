@@ -145,7 +145,8 @@ case class Guerrero(
   }
 
   def movimientoMasEfectivoContra(oponente: Guerrero)(unCriterio: Criterio): Option[Movimiento] = {
-    val ms = movimientosAprendidos.filter { movimiento => movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0 }
+    val ms = movimientosAprendidos.filter { movimiento => 
+      movimiento.cuantificadoSegun(this, oponente)(unCriterio) > 0}
 
     if (ms == List()) {
       None
@@ -156,7 +157,10 @@ case class Guerrero(
 
   def pelearRound(movimiento: Movimiento)(oponente: Guerrero): (Guerrero, Guerrero) = {
     val mayorVentaja = new Criterio({ (at, df) => at.ki - df.ki })
-    val menorDesventaja = new Criterio({ (at, df) => (-1) / (at.ki - df.ki) })
+    val menorDesventaja = new Criterio({ (at, df) => 
+    var n: Float = at.ki - df.ki
+    n = (-1) / n
+    n })
     
     var (atacante,defensor) = movimiento.apply(this,oponente)
     val funcContraataque = defensor.movimientoMasEfectivoContra(atacante)_
