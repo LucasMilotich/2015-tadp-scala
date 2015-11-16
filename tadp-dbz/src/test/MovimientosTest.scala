@@ -73,7 +73,7 @@ class MovimientosTest {
     fail()
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def `explota_freezer_y_lastima_a_goku` = {
     val (nuevoFreezer, nuevoGoku) = Explotar(freezer, goku)
 
@@ -119,7 +119,7 @@ class MovimientosTest {
     fail()
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def krilin_come_oponente = {
     val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
@@ -127,7 +127,7 @@ class MovimientosTest {
     assertEquals(nuevoFreezer.estado, NormalGuerrero)
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def freezer_come_oponente = {
     val (nuevoFreezer, nuevoKrilin) = comerOponente(freezer, krilin.aprenderMovimiento(CargarKi))
 
@@ -135,7 +135,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, Muerto)
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def cell_come_androide = {
     val (nuevoCell, nuevoA18) = comerOponente(cell, a18.aprenderMovimiento(CargarKi))
 
@@ -151,7 +151,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, NormalGuerrero)
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def majinBuu_come_oponente = {
     val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
     val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimiento(CargarKi))
@@ -160,7 +160,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, Muerto)
   }
 
-  @Test
+  @Test(expected = classOf[RuntimeException])
   def majinBuu_come_oponente2 = {
     val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimiento(CargarKi))
     val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
@@ -192,14 +192,23 @@ class MovimientosTest {
     assertEquals(false, nuevoMajinBuu.esferasCompletas)
   }
   
-//  @Test
-//  def majinBuu_hace_Magia_a_el_mismo = {
-//    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, majinBuu)(majinBuu.agregarItems(esferasCompletas), goku)
-//
-//    assertEquals(Inconsciente, nuevoMajinBuu.estado)
-//    assertEquals(Inconsciente, nuevoGoku.estado)
-//    assertEquals(false, nuevoMajinBuu.esferasCompletas)
-//  }
+  @Test
+  def majinBuu_hace_Magia_a_el_mismo = {
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, Some(majinBuu))(majinBuu.agregarItems(esferasCompletas), goku)
+
+    assertEquals(Inconsciente, nuevoMajinBuu.estado)
+    assertEquals(NormalGuerrero, nuevoGoku.estado)
+    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+  }
+  
+    @Test
+  def majinBuu_hace_Magia_solo_a_oponente = {
+    val (nuevoMajinBuu, nuevoGoku) = hacerMagia(Inconsciente, Some(goku))(majinBuu.agregarItems(esferasCompletas), goku)
+
+    assertEquals(NormalGuerrero, nuevoMajinBuu.estado)
+    assertEquals(Inconsciente, nuevoGoku.estado)
+    assertEquals(false, nuevoMajinBuu.esferasCompletas)
+  }
 
   @Test
   def majinBuu_hace_Magia_sin_esferas = {

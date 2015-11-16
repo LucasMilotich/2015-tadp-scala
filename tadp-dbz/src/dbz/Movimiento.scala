@@ -60,10 +60,10 @@ case class hacerMagia(estado: Estado, guerreroOpcional : Option[Guerrero]) exten
         (guerrero.cambiarEstado(estado).quitarEsferas, oponente.cambiarEstado(estado))
         case Namekusein | Monstruo(_) if (guerrero.esferasCompletas && !guerreroOpcional.isEmpty) =>
             if (oponente.equals(guerreroOpcional)) {
-              (guerrero, oponente.cambiarEstado(estado))
+              (guerrero.quitarEsferas, oponente.cambiarEstado(estado))
             }
             else
-             (guerrero.cambiarEstado(estado),oponente)     
+             (guerrero.cambiarEstado(estado).quitarEsferas,oponente)     
       case _ => (guerrero, oponente)
     }
   }
