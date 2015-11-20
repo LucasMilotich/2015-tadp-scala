@@ -236,6 +236,7 @@ class MovimientosTest {
      val (guerrero, nuevoGoku2) = CargarKi(guerreroMuerto,goku)
      
      assertEquals(guerrero,guerreroMuerto)
+    
        
     
   }

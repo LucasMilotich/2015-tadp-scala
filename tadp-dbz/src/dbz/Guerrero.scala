@@ -12,7 +12,7 @@ case class Guerrero(
     items: Set[Item] = Set(),
     movimientosAprendidos: List[Movimiento] = List(),
     movimientosRobados: List[Movimiento] = List(),
-    movimientosUtilizados: List[Movimiento] = List(),
+    var vecesSeguidasFajado :Int =0,
     estado: Estado = NormalGuerrero) {
 
   def aumentarKi(numero: Int) =
@@ -222,5 +222,18 @@ case class Guerrero(
   def podesHacerMovimiento={
     !this.estasInconsciente || !this.estasMuerto
   }
+  
+  def fuisteFajado={
+    vecesSeguidasFajado = vecesSeguidasFajado +1
+  }
+  
+ 
+  
+  def volveFajadoACero ={
+    vecesSeguidasFajado =0 
+  }
+  
+  
+  
 }
   

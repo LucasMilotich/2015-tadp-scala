@@ -43,3 +43,14 @@ case class Onda(cantidad: Int) extends TipoAtaque {
 
  
 }
+
+case class Genkidama(kiExterno:Int) extends TipoAtaque {
+  def apply(guerrero: Guerrero, atacado: Guerrero) = {
+        if (guerrero.podesHacerMovimiento) {
+           (guerrero,atacado.bajarKi( kiExterno* guerrero.vecesSeguidasFajado))
+} else {
+  (guerrero,atacado)
+}
+    
+  }
+}
