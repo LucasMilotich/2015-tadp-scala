@@ -79,7 +79,8 @@ case class Guerrero(
   }
 
   def explota = {
-    bajarKi(ki)
+    bajarKi(ki).morir
+    
   }
 
   def tieneCola = {
@@ -177,7 +178,7 @@ case class Guerrero(
   }
 
   def verificarDerrota(oponente: Guerrero) = {
-    if (this.estado == Muerto) throw new PeleaTerminadaException(oponente)
+    if (this.estasMuerto) throw new PeleaTerminadaException(oponente)
   }
   
   def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio): List[Movimiento] = {
@@ -208,6 +209,18 @@ case class Guerrero(
       case e: PeleaTerminadaException => new ResultadoPelea(e.ganador)
     }
     new ResultadoPelea(combate._1,Some(combate._2))
+  }
+  
+  def estasInconsciente ={
+    this.estado == Inconsciente
+  }
+  
+  def estasMuerto ={
+    this.estado == Muerto
+  }
+  
+  def podesHacerMovimiento={
+    !this.estasInconsciente || !this.estasMuerto
   }
 }
   

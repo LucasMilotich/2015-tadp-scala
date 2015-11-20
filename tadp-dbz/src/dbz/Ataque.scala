@@ -41,27 +41,5 @@ case class Onda(cantidad: Int) extends TipoAtaque {
 
   }
 
-//  case class Genkidama(cantidad: Int) extends TipoAtaque {
-//
-//    val loop = new Breaks;
-//    var mov: Movimiento 
-//    val cant = 0
-//    def apply(guerrero: Guerrero, atacado: Guerrero) = {
-//      loop.breakable {
-//        for (mov <- guerrero.movimientosUtilizados) {
-//          mov match {
-//            case DejarseFajar => aumentarCantidad
-//            case _            => loop.break()
-//          }
-//        }
-//      }
-//
-//      (guerrero, atacado.bajarKi(cantidad))
-//
-//    }
-//    def aumentarCantidad = {
-//      val cant: Int = cant + 1
-//    }
-//  }
-
+ 
 }

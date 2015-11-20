@@ -14,6 +14,7 @@ class MovimientosTest {
   val a18 = new Guerrero("a18", Androide, 0, 0)
   val freezer = new Guerrero("freezer", Monstruo(DigestionDefault), 50, 800)
   val goku_ssj2 = new Guerrero("goku", Saiyajin(SuperSaiyajin(2)), 1500, 2000)
+  val guerreroMuerto= new Guerrero("muerto", Humano,0,0)
 
   val cell = new Guerrero("cell", Monstruo(SoloAndroides), 50, 800)
   val majinBuu = new Guerrero("majinBuu", Monstruo(SoloUltimoGuerrero), 50, 800)
@@ -73,11 +74,12 @@ class MovimientosTest {
     fail()
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def `explota_freezer_y_lastima_a_goku` = {
     val (nuevoFreezer, nuevoGoku) = Explotar(freezer, goku)
 
     assertKi(nuevoFreezer, 0)
+    assertEquals(nuevoFreezer.estado,Muerto)
     assertKi(nuevoGoku, 1400)
   }
 
@@ -121,13 +123,14 @@ class MovimientosTest {
 
   @Test(expected = classOf[RuntimeException])
   def krilin_come_oponente = {
-    val (nuevoKrilin, nuevoFreezer) = comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
+   val(nuevoKrilin, nuevoFreezer) =comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
     assertEquals(nuevoKrilin.movimientosRobados.size, krilin.movimientosRobados.size)
     assertEquals(nuevoFreezer.estado, NormalGuerrero)
+   
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def freezer_come_oponente = {
     val (nuevoFreezer, nuevoKrilin) = comerOponente(freezer, krilin.aprenderMovimiento(CargarKi))
 
@@ -135,7 +138,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, Muerto)
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def cell_come_androide = {
     val (nuevoCell, nuevoA18) = comerOponente(cell, a18.aprenderMovimiento(CargarKi))
 
@@ -151,7 +154,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, NormalGuerrero)
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def majinBuu_come_oponente = {
     val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
     val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimiento(CargarKi))
@@ -160,7 +163,7 @@ class MovimientosTest {
     assertEquals(nuevoKrilin.estado, Muerto)
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def majinBuu_come_oponente2 = {
     val (nuevoMajinBuu, _) = comerOponente(majinBuu, goku.aprenderMovimiento(CargarKi))
     val (nuevoMajinBuu2, nuevoKrilin) = comerOponente(nuevoMajinBuu, krilin.aprenderMovimientos(List(DejarseFajar, DejarseFajar, DejarseFajar, CargarKi)))
@@ -226,6 +229,15 @@ class MovimientosTest {
     assertEquals(NormalGuerrero, nuevoKrilin.estado)
     assertEquals(NormalGuerrero, nuevoGoku.estado)
     assertEquals(true, nuevoKrilin.esferasCompletas)
+  }
+  
+  @Test
+    def guerrero_muerto_no_hace_movimieto ={
+     val (guerrero, nuevoGoku2) = CargarKi(guerreroMuerto,goku)
+     
+     assertEquals(guerrero,guerreroMuerto)
+       
+    
   }
 
 }
