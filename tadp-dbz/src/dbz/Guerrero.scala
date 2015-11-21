@@ -119,9 +119,10 @@ case class Guerrero(
   }
 
   def formaDeDigerir = {
+    
     tipo match {
       case Monstruo(formaDeDigerir) => formaDeDigerir
-      case _ => DigestionDefault
+      case _ => PasarVerguenza
     }
   }
 

@@ -53,5 +53,22 @@ class CombatesTest {
     assertEquals(defensor.ki,960)
   }
   
+  @Test
+  def `pelea_round_guerrero_Golpes_ninja` = {
+    val (atacante,defensor) = krilin.pelearRound(GolpesNinja)(yajirobe)
+    
+    assertEquals(atacante.ki,3491)
+    assertEquals(defensor.ki,980)
+  }
+  
+  
+  
+  
+  
+  
+  
+  
+  
+  
   
 }

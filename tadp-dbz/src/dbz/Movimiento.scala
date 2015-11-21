@@ -62,14 +62,12 @@ case class Convertirse(formaNueva: FormaSaiyajin) extends Movimiento {
 
 case object comerOponente extends Movimiento {
   def apply(guerrero: Guerrero, oponente: Guerrero) = {
-//    if (guerrero.podesHacerMovimiento) {
-      guerrero.formaDeDigerir match {
-        case SoloUltimoGuerrero => (guerrero.limpiarMovimientosRobados.aprenderMovimientosDe(oponente), oponente.morir)
-        case SoloAndroides if (oponente.tipo == Androide) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
-        case DigestionDefault => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
-        case _ => (guerrero, oponente)
-      }
-//    } else { (guerrero, oponente) }
+    guerrero.formaDeDigerir match {
+      case SoloUltimoGuerrero => (guerrero.limpiarMovimientosRobados.aprenderMovimientosDe(oponente), oponente.morir)
+      case SoloAndroides if (oponente.tipo == Androide) => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case DigestionDefault => (guerrero.aprenderMovimientosDe(oponente), oponente.morir)
+      case _ => (guerrero, oponente)
+    }
   }
 }
 
@@ -81,8 +79,9 @@ case class hacerMagia(estado: Estado, guerreroOpcional: Option[Guerrero]) extend
         case Namekusein | Monstruo(_) if (guerrero.esferasCompletas && guerreroOpcional.isEmpty) =>
           (guerrero.cambiarEstado(estado).quitarEsferas, oponente.cambiarEstado(estado))
         case Namekusein | Monstruo(_) if (guerrero.esferasCompletas && !guerreroOpcional.isEmpty) =>
-          if (oponente.equals(guerreroOpcional)) {
+          if (oponente.equals(guerreroOpcional.get)) {
             (guerrero.quitarEsferas, oponente.cambiarEstado(estado))
+
           } else
             (guerrero.cambiarEstado(estado).quitarEsferas, oponente)
         case _ => (guerrero, oponente)

@@ -29,6 +29,7 @@ case class Fusionado(original: Guerrero) extends Tipo
 
 abstract class FormaDeDigerir
 
+case object PasarVerguenza extends FormaDeDigerir
 case object DigestionDefault extends FormaDeDigerir
 case object SoloAndroides extends FormaDeDigerir
 case object SoloHumanos extends FormaDeDigerir

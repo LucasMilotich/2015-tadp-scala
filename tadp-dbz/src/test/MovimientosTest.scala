@@ -121,7 +121,7 @@ class MovimientosTest {
     fail()
   }
 
-  @Test(expected = classOf[RuntimeException])
+  @Test
   def krilin_come_oponente = {
    val(nuevoKrilin, nuevoFreezer) =comerOponente(krilin, freezer.aprenderMovimiento(CargarKi))
 
@@ -236,9 +236,6 @@ class MovimientosTest {
      val (guerrero, nuevoGoku2) = CargarKi(guerreroMuerto,goku)
      
      assertEquals(guerrero,guerreroMuerto)
-    
-       
-    
   }
 
 }
