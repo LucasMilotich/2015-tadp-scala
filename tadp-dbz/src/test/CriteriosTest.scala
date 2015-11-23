@@ -29,7 +29,7 @@ class CriteriosTest {
    val criterio = new Criterio({(atacante,_) => atacante.ki})
    val planDeAtaque = yajirobe.planDeAtaqueContra(celljr, 2)(criterio)
    
-   assertEquals(planDeAtaque.size,(List(usarItem(arma(Filosa)),usarItem(semillaDelErmitanio))).size)
+   assertEquals(planDeAtaque.get.size,(List(usarItem(arma(Filosa)),usarItem(semillaDelErmitanio))).size)
    
  }
  

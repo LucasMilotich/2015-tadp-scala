@@ -182,28 +182,30 @@ case class Guerrero(
     if (this.estasMuerto) throw new PeleaTerminadaException(oponente)
   }
   
-  def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio): List[Movimiento] = {
-    var plan: List[Movimiento] = List()
-    var combate: Try[(Guerrero, Guerrero)] = Success(this, oponente)
+  def planDeAtaqueContra(oponente: Guerrero, cantRounds: Int)(criterio: Criterio): Try[List[Movimiento]] = {
+    Try {
+      var plan: List[Movimiento] = List()
+      var combate: (Guerrero, Guerrero) = (this, oponente)
 
-    for (i <- 1 to cantRounds) {
-      val movimientoConveniente = combate.get._1.movimientoMasEfectivoContra(combate.get._2)(criterio)
+      for (i <- 1 to cantRounds) {
+        val movimientoConveniente = combate._1.movimientoMasEfectivoContra(combate._2)(criterio)
 
-      movimientoConveniente match {
-        case Some(movimiento: Movimiento) => {
-          plan = plan.+:(movimiento)
-          combate = Try(combate.get._1.pelearRound(movimiento)(combate.get._2))
+        movimientoConveniente match {
+          case Some(movimiento: Movimiento) => {
+            plan = plan.+:(movimiento)
+            combate = combate._1.pelearRound(movimiento)(combate._2)
+          }
+          case None => throw new RuntimeException("No encuentra plan de ataque")
         }
-        case None => throw new RuntimeException("No encuentra plan de ataque")
       }
+      plan
     }
-    plan
   }
 
-  def pelearContra(oponente: Guerrero)(planDeAtaque: List[Movimiento]): ResultadoPelea = {
+  def pelearContra(oponente: Guerrero)(planDeAtaque: Try[List[Movimiento]]): ResultadoPelea = {
     var combate = (this,oponente)
     try {
-      combate = planDeAtaque.foldLeft(combate) {
+      combate = planDeAtaque.get.foldLeft(combate) {
         (pelea,movimiento: Movimiento) => pelea._1.pelearRound(movimiento)(pelea._2) 
       }
     } catch {
